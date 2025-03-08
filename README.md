@@ -5,7 +5,7 @@
 
 ## Table of Contents
 - [Overview](#overview)
-- [Instructions](#instructions)
+- [Instructions to Run the Project](#instructions-to-run-the-project)
 - [Database Setup and Configuration](#database-setup-and-configuration)
 - [Assumptions](#assumptions)
 - [Usage](#usage)
@@ -20,12 +20,12 @@ The **Ultimate Inter-University Fantasy Cricket Game** is a cutting-edge fantasy
 - **User Interface**: Allow users to build teams, track their budget, and monitor the leaderboard.
 - **AI Chatbot (Spiriter)**: Assist users with player insights and team selection.
 
-## Key Features
+## 1.Key Features
 - **Admin Panel**: Player CRUD operations, real-time updates, and tournament summaries.
 - **User Interface**: Team selection, budget tracking, and dynamic leaderboard.
 - **AI Chatbot (Spiriter)**: Provides player insights and team-building suggestions.
 
-## Tech Stack
+## 2.Tech Stack
 - **Frontend**: Next.js, Tailwind CSS, shadcn/ui
 - **Backend**: Node.js (Express.js)
 - **Database**: PostgreSQL
