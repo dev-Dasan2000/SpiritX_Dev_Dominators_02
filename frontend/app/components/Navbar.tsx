@@ -23,7 +23,7 @@ const Navbar = () => {
         <Link href="/budgetTracker" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
           <DollarSign size={18} /> Budget
         </Link>
-        <Link href="#" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
+        <Link href="LeaderBoard" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
           <BarChart size={18} /> Leaderboard
         </Link>
         <Link href="#" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
