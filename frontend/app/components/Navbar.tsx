@@ -14,13 +14,13 @@ const Navbar = () => {
 
       {/* Navigation Links */}
       <div className="flex items-center gap-6">
-        <Link href="#" className="flex items-center gap-2 bg-[#2D5D85] px-4 py-2 rounded-lg hover:bg-[#A0C9E6] hover:text-[#2D5D85] transition-colors">
+        <Link href="/selectTeam" className="flex items-center gap-2 bg-[#2D5D85] px-4 py-2 rounded-lg hover:bg-[#A0C9E6] hover:text-[#2D5D85] transition-colors">
           <Users size={18} /> Select Your Team
         </Link>
         <Link href="#" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
           <Layers size={18} /> Team
         </Link>
-        <Link href="#" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
+        <Link href="/budgetTracker" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
           <DollarSign size={18} /> Budget
         </Link>
         <Link href="#" className="flex items-center gap-2 hover:bg-[#A0C9E6] hover:text-[#2D5D85] px-3 py-2 rounded-lg transition-colors">
