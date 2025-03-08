@@ -170,8 +170,14 @@ Access the chatbot via the "Spiriter" button.
 
 ---
 
-## Contribution
-Feel free to open issues or submit pull requests. Follow the existing code style and project structure.
+## --Contribution--
+## Authors
+
+- [iamindunil](https://www.github.com/imaindunil)
+- [dev-Dasan2000](https://www.github.com/dev-Dasan2000)
+- [Dilesh99](https://www.github.com/Dilesh99)
+- [RWSandaru8](https://www.github.com/RWsandaru8)
+- [NaveenSandaru](https://www.github.com/NaveenSandaru)
 
 ---
 
