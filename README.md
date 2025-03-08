@@ -88,13 +88,18 @@ psql -U <user> -d fantasy_cricket -f database_dump.sql
 
 ##  Running the Project
 
-### Start the Backend
-```bash
-npm run dev:server
-```
+Open two terminals and follow these steps:
 
-### Start the Frontend
+1. **Frontend (Next.js)**
+
 ```bash
+cd frontend
+npm run dev
+```
+2. **Backend (Node.js)**
+
+```bash
+cd backend
 npm run dev
 ```
 
