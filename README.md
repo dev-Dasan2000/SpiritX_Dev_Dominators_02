@@ -60,33 +60,7 @@ JWT_SECRET=<your-jwt-secret>
 npm install
 ```
 
-## Database Setup and Configuration
-Ensure PostgreSQL is running, then:
-
-1. Create the `fantasy_cricket` database:
-
-```sql
-CREATE DATABASE fantasy_cricket;
-```
-
-2. Run database migrations:
-```bash
-npm run migrate
-```
-
-3. Seed initial data:
-```bash
-npm run seed
-```
-
-Alternatively, import the provided database dump:
-```bash
-psql -U <user> -d fantasy_cricket -f database_dump.sql
-```
-
----
-
-##  Running the Project
+##  Development Server
 
 Open two terminals and follow these steps:
 
@@ -116,6 +90,32 @@ Admin Capabilities:
 1. CRUD operations for players.
 2. Real-time player statistics updates.
 3. Tournament summary (runs, wickets, top players).
+
+---
+
+## Database Setup and Configuration
+Ensure PostgreSQL is running, then:
+
+1. Create the `fantasy_cricket` database:
+
+```sql
+CREATE DATABASE fantasy_cricket;
+```
+
+2. Run database migrations:
+```bash
+npm run migrate
+```
+
+3. Seed initial data:
+```bash
+npm run seed
+```
+
+Alternatively, import the provided database dump:
+```bash
+psql -U <user> -d fantasy_cricket -f database_dump.sql
+```
 
 ---
 
