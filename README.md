@@ -1,8 +1,6 @@
 # SpiritX_Dev_Dominators_02
   A secure and user-friendly cricket player selection to create a team for cricket tournment
 
-# Project Name
-
 ## Table of Contents
 - [Overview](#overview)
 - [Instructions to Run the Project](#instructions-to-run-the-project)
