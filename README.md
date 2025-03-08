@@ -130,7 +130,7 @@ Users must register and log in using a username and password.
 
 ---
 
-##  AI Chatbot (Spiriter)
+###  AI Chatbot (Spiriter)
 - Provides player insights and statistics.
 - Suggests optimal team configurations.
 - Handles unknown queries with a fallback message.
