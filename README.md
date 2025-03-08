@@ -6,7 +6,6 @@
 - [Instructions to Run the Project](#instructions-to-run-the-project)
 - [Database Setup and Configuration](#database-setup-and-configuration)
 - [Assumptions](#assumptions)
-- [Usage](#usage)
 - [Additional Features](#additional-features)
 - [Guidelines for Stage 2](#guidelines-for-stage-2)
 - [Contribution](#contribution)
