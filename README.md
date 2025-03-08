@@ -181,8 +181,6 @@ Access the chatbot via the "Spiriter" button.
 
 ---
 
-## Contact
-For inquiries or contributions, email: [your-email@example.com](mailto:your-email@example.com)
 
 
 
