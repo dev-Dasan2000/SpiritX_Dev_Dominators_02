@@ -60,7 +60,7 @@ JWT_SECRET=<your-jwt-secret>
 npm install
 ```
 
-### 4. Database Setup
+## Database Setup and Configuration
 Ensure PostgreSQL is running, then:
 
 1. Create the `fantasy_cricket` database:
