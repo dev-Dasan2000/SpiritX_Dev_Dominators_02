@@ -26,9 +26,10 @@ const initialLeaderboard: LeaderboardEntry[] = [
 const Leaderboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const filteredLeaderboard = initialLeaderboard.filter((entry) =>
-    entry.username.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter and sort the leaderboard by rank
+  const filteredLeaderboard = initialLeaderboard
+    .filter((entry) => entry.username.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => a.rank - b.rank);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
