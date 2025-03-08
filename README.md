@@ -130,7 +130,7 @@ Users must register and log in using a username and password.
 
 ---
 
-##  AI Chatbot (Spiriter)
+###  AI Chatbot (Spiriter)
 - Provides player insights and statistics.
 - Suggests optimal team configurations.
 - Handles unknown queries with a fallback message.
@@ -171,7 +171,7 @@ Access the chatbot via the "Spiriter" button.
 ---
 
 ## Contribution
-## Authors
+### Authors
 
 - [iamindunil](https://www.github.com/imaindunil)
 - [dev-Dasan2000](https://www.github.com/dev-Dasan2000)
