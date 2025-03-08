@@ -34,7 +34,7 @@ The **Ultimate Inter-University Fantasy Cricket Game** is a cutting-edge fantasy
 
 ---
 
-## Project Setup & Installation
+## Instructions to Run the Project
 
 ### Prerequisites
 Ensure you have the following installed:
