@@ -175,11 +175,6 @@ Feel free to open issues or submit pull requests. Follow the existing code style
 
 ---
 
-## License
-This project is licensed under the MIT License.
-
----
-
 ## Contact
 For inquiries or contributions, email: [your-email@example.com](mailto:your-email@example.com)
 
