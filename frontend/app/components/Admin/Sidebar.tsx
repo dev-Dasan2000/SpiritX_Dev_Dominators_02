@@ -82,7 +82,7 @@ const AdminSidebar = () => {
         </div>
       </SidebarHeader>
       
-      <SidebarContent className="py-6">
+      <SidebarContent className="py-6 overflow-hidden">
         {Object.entries(menuGroups).map(([group, groupItems]) => (
           <SidebarGroup key={group} className="mb-8">
             <div className="px-6 mb-3 text-xs font-semibold uppercase tracking-wider text-[#94A3B8]">{group}</div>
