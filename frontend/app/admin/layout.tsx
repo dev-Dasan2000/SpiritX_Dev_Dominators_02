@@ -1,19 +1,37 @@
-"use client";
+'use client';
 
-import AdminSidebar from "@/components/AdminSidebar";
+import { Inter } from 'next/font/google';
+import Navbar from '../components/Navbar';
+import '../globals.css';
+import { Sidebar } from 'lucide-react';
+import { SidebarProvider } from '../components/ui/sidebar';
+import AdminSidebar from '../components/Admin/Sidebar';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+const inter = Inter({ subsets: ['latin'] });
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex h-screen">
-      {/* Fixed Sidebar */}
-      <div className="w-64 fixed inset-y-0 left-0 z-50">
-        <AdminSidebar />
-      </div>
-      
-      {/* Main Content */}
-      <div className="flex-1 ml-64 overflow-auto p-6 bg-gray-100">
-        {children}
-      </div>
-    </div>
+    <html lang="en">
+      <body className={inter.className}>
+        <div className="min-h-screen flex flex-col bg-white w-full">
+          {/* Navbar as Header */}
+          <SidebarProvider>
+            <AdminSidebar/>
+          </SidebarProvider>
+          
+          {/* Main Content */}
+          <div className="flex-grow" >
+            {children}
+          </div>
+          
+        
+          
+        </div>
+      </body>
+    </html>
   );
 }
