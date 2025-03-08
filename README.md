@@ -171,7 +171,7 @@ Access the chatbot via the "Spiriter" button.
 ---
 
 ## Contribution
-## Authors
+### Authors
 
 - [iamindunil](https://www.github.com/imaindunil)
 - [dev-Dasan2000](https://www.github.com/dev-Dasan2000)
