@@ -9,9 +9,9 @@
 - [Database Setup and Configuration](#database-setup-and-configuration)
 - [Assumptions](#assumptions)
 - [Usage](#usage)
-- [Contribution](#contribution)
-- [License](#license)
 - [Additional Features](#additional-features)
+- [Guidelines for Stage 2](#guidelines-for-stage-2)
+- [Contribution](#contribution)
 
 ## Overview
 The **Ultimate Inter-University Fantasy Cricket Game** is a cutting-edge fantasy sports platform where users can create and manage cricket teams, competing on a real-time leaderboard. The system comprises three core modules:
