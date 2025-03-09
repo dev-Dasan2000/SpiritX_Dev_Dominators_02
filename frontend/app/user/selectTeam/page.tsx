@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { Button } from '@/app/components/ui/button';
 
 export default function Home() {
-  // Teams state to manage multiple teams
+  /* Teams state to manage multiple teams*/
   const [teams, setTeams] = useState([
     {
       id: 1,
