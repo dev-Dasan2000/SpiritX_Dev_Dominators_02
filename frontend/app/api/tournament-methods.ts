@@ -1,56 +1,53 @@
 import 'dotenv/config';
 import AuthMethods from './auth-methods';
 
+// Helper function to get the access token
+const getAccessToken = async () => {
+    const retrievedData = await AuthMethods.RefreshToken();
+    if (!retrievedData?.accessToken) {
+        throw new Error('Failed to refresh token');
+    }
+    return retrievedData.accessToken;
+};
+
 const TournamentMethods = {
+    // Get all match statistics
     GetAllMatchStatistics: async () => {
-        try{
-            const retrievedData = await AuthMethods.RefreshToken();
-            if (!retrievedData.accessToken) {
-                throw new Error('Failed to refresh token');
-            }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament`,{
+        try {
+            const accessToken = await getAccessToken();
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament`, {
                 method: 'GET',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${retrievedData.accessToken}`
-                }
-            })
-            if (!response.ok) {
-                throw new Error('Failed to get match statistics');
-            }
-            const data = await response.json();
-            return data;
-        }
-        catch(error){
-            return error;
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (!response.ok) throw new Error('Failed to get match statistics');
+            return await response.json();
+        } catch (error: any) {
+            return { error: error.message };
         }
     },
 
+    // Get specific match statistics by match ID
     GetMatchStatistics: async (matchid: string) => {
-        try{
-            const retrievedData = await AuthMethods.RefreshToken();
-            if (!retrievedData.accessToken) {
-                throw new Error('Failed to refresh token');
-            }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament/${matchid}`,{
+        try {
+            const accessToken = await getAccessToken();
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament/${matchid}`, {
                 method: 'GET',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${retrievedData.accessToken}`
-                }
-            })
-            if (!response.ok) {
-                throw new Error('Failed to get match statistics');
-            }
-            const data = await response.json();
-            return data;
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (!response.ok) throw new Error('Failed to get match statistics');
+            return await response.json();
+        } catch (error: any) {
+            return { error: error.message };
         }
-        catch(error){
-            return error;
-        }
-    }
-}
+    },
+};
 
 export default TournamentMethods;
