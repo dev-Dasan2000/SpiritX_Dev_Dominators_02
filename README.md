@@ -91,6 +91,7 @@ Admin Capabilities:
 ---
 
 ## Database Setup and Configuration
+Database has been hosted.
 Ensure PostgreSQL is running, then:
 
 1. Create the `fantasy_cricket` database:
