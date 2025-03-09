@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get all teams
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM teams');
         return res.json(result.rows);
@@ -15,7 +15,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // Get specific team
-router.get('/:teamname', authenticateToken, async (req, res) => {
+router.get('/:teamname', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname } = req.params;
         const { username } = req.body.username;
@@ -28,7 +28,7 @@ router.get('/:teamname', authenticateToken, async (req, res) => {
 });
 
 // Create new team
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname, username, mem1, mem2, mem3, mem4, mem5, mem6, mem7, mem8, mem9, mem10, mem11 } = req.body;
         await pool.query(
@@ -42,7 +42,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // Update team
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname, username, newteamname, mem1, mem2, mem3, mem4, mem5, mem6, mem7, mem8, mem9, mem10, mem11 } = req.body;
         await pool.query(
@@ -56,7 +56,7 @@ router.put('/', authenticateToken, async (req, res) => {
 });
 
 // Delete team
-router.delete('/:teamname', authenticateToken, async (req, res) => {
+router.delete('/:teamname', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname } = req.params;
         const { username } = req.body.username;

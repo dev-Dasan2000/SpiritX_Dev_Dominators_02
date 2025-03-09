@@ -6,7 +6,7 @@ import { Button } from '@/app/components/ui/button';
 import AuthMethods from '@/app/api/auth-methods';
 
 export default function Home() {
-  // Teams state to manage multiple teams
+  /* Teams state to manage multiple teams*/
   const [teams, setTeams] = useState([
     {
       id: 1,

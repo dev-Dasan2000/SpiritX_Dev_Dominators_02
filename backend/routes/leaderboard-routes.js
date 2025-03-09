@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get all leaderboards
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM leaderboard ORDER BY total_points ASC');
         return res.json(result.rows);
@@ -16,7 +16,7 @@ router.get('/', authenticateToken, async (req, res) => {
 
 
 // Get specific leaderboard
-router.get('/:teamname', authenticateToken, async (req, res) => {
+router.get('/:teamname', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname } = req.params;
         const { username } = req.body;
@@ -29,7 +29,7 @@ router.get('/:teamname', authenticateToken, async (req, res) => {
 });
 
 // Create new leaderboard
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname, totalpoints, username } = req.body;
         await pool.query(
@@ -43,7 +43,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // Update leaderboard
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname, totalpoints, username } = req.body;
         await pool.query(
@@ -57,7 +57,7 @@ router.put('/', authenticateToken, async (req, res) => {
 });
 
 // Delete leaderboard
-router.delete('/:teamname', authenticateToken, async (req, res) => {
+router.delete('/:teamname', /*authenticateToken,*/ async (req, res) => {
     try {
         const { teamname } = req.params;
         const { username } = req.body;

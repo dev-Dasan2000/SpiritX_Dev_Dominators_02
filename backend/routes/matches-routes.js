@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get all matches
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM matches');
         return res.json(result.rows);
@@ -15,7 +15,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // Get specific match
-router.get('/:matchid', authenticateToken, async (req, res) => {
+router.get('/:matchid', /*authenticateToken,*/ async (req, res) => {
     try {
         const { matchid } = req.params;
         const { playerid } = req.body;
@@ -28,7 +28,7 @@ router.get('/:matchid', authenticateToken, async (req, res) => {
 });
 
 // Create new match
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded } = req.body;
         await pool.query(
@@ -42,7 +42,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // Update match
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded } = req.body;
         await pool.query(
@@ -56,7 +56,7 @@ router.put('/', authenticateToken, async (req, res) => {
 });
 
 // Delete match
-router.delete('/:matchid', authenticateToken, async (req, res) => {
+router.delete('/:matchid', /*authenticateToken,*/ async (req, res) => {
     try {
         const { matchid } = req.params;
         const { playerid } = req.body;

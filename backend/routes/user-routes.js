@@ -6,7 +6,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get all users
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const result = await pool.query('SELECT username FROM users');
         return res.json(result.rows);
@@ -16,7 +16,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // Get specific user
-router.get('/:username', authenticateToken, async (req, res) => {
+router.get('/:username', /*authenticateToken,*/ async (req, res) => {
     try {
         const { username } = req.params;
         const result = await pool.query('SELECT username FROM users WHERE username = $1', [username]);
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update user
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -59,7 +59,7 @@ router.put('/', authenticateToken, async (req, res) => {
 });
 
 // Delete user
-router.delete('/:username', authenticateToken, async (req, res) => {
+router.delete('/:username', /*authenticateToken,*/ async (req, res) => {
     try {
         const { username } = req.params;
         await pool.query('DELETE FROM users WHERE username = $1', [username]);
