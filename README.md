@@ -156,7 +156,6 @@ Access the chatbot via the "Spiriter" button.
 - Dynamic point calculation and automatic value updates.
 - Real-time leaderboard with auto-refresh.
 - AI-assisted team selection.
-- Automatic team completeness tracker.
 
 ---
 
