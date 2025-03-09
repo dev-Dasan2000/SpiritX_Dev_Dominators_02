@@ -13,8 +13,21 @@ const getAccessToken = async () => {
 const PlayerMethods = {
     // Get all players
     GetAllPlayers: async () => {
+<<<<<<< Updated upstream
         try {
             const accessToken = await getAccessToken();
+=======
+        try{
+            const retrievedData = await AuthMethods.RefreshToken();
+            if (retrievedData.error) {
+                throw new Error(retrievedData.error);
+            }
+            const accessToken = retrievedData.accessToken;
+            if (!accessToken) {
+                //throw new Error('No access token');
+            }
+
+>>>>>>> Stashed changes
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`, {
                 method: 'GET',
                 headers: {
@@ -29,7 +42,7 @@ const PlayerMethods = {
         } catch (error: any) {
             return { error: error.message };
         }
-    },
+    },  
 
     // Get a specific player by ID
     GetPlayer: async (playerid: string) => {

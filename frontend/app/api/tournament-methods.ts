@@ -14,12 +14,12 @@ const TournamentMethods = {
     // Get all match statistics
     GetAllMatchStatistics: async () => {
         try {
-            const accessToken = await getAccessToken();
+            /*const accessToken = await getAccessToken();*/
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
+                    /*Authorization: `Bearer ${accessToken}`,*/
                 },
             });
 

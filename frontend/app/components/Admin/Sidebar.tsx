@@ -26,6 +26,7 @@ import {
   LogOut 
 } from "lucide-react";
 import { Button } from "../ui/button";
+import AuthMethods from "@/app/api/auth-methods";
 
 const items = [
   {
@@ -112,7 +113,7 @@ const AdminSidebar = () => {
       </SidebarContent>
       
       <SidebarFooter className="p-6 mt-auto border-t border-[#475569]">
-        <Button 
+        <Button onClick={() => AuthMethods.UserLogOut().then(() => window.location.href="/admin")}
           className="w-full bg-transparent hover:bg-[#2C3E50] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#475569] rounded-lg flex items-center justify-center gap-2 py-3"
         >
           <LogOut className="w-[18px] h-[18px]" />
