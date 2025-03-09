@@ -17,16 +17,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen flex flex-col bg-white">
+        <div className="min-h-screen flex flex-col bg-white w-full">
           {/* Navbar as Header */}
           <SidebarProvider>
             <AdminSidebar/>
           </SidebarProvider>
           
           {/* Main Content */}
-          <main className="flex-grow">
+          <div className="flex-grow" >
             {children}
-          </main>
+          </div>
           
         
           
