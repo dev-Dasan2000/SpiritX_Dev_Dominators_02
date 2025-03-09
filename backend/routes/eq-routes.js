@@ -4,7 +4,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 
 const router = express.Router();
 
-router.get('/:matchid', /*authenticateToken,*/ async (req, res) => {
+router.get('/:matchid', authenticateToken, async (req, res) => {
     const { economyRate, bowlingStrikeRate, battingAverage, battingStrikeRate, playerPoints, valueInRupees } = 0;
     try {
         const { matchid } = req.params;

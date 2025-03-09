@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get overall match statistics
-router.get('/', /*authenticateToken,*/ async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
     try {
         const result = await pool.query(`
             SELECT 
@@ -27,7 +27,7 @@ router.get('/', /*authenticateToken,*/ async (req, res) => {
 });
 
 // Get statistics for a specific match
-router.get('/:matchid/', /*authenticateToken,*/ async (req, res) => {
+router.get('/:matchid/', authenticateToken, async (req, res) => {
     try {
         const { matchid } = req.params;
 

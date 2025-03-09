@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Button } from '@/app/components/ui/button';
 import AuthMethods from '@/app/api/auth-methods';
+import TeamMethods from '@/app/api/team-methods';
+import PlayerMethods from '@/app/api/player-methods';
 
 export default function Home() {
   /* Teams state to manage multiple teams*/
@@ -51,6 +53,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [username, setUsername] = useState('');
 
  
 
@@ -72,7 +75,12 @@ export default function Home() {
 
   useEffect(() => {
     attemptAutoLogin();
+    getAllPlayers();
   }, []);
+
+  useEffect(()=>{
+    getAllTeams();
+  },[username])
   
   async function attemptAutoLogin(){
     await AuthMethods.RefreshToken().then((response:any)=>{
@@ -81,6 +89,19 @@ export default function Home() {
         window.alert("Session expired. Please log in again.");
         window.location.href="/"
       }
+      setUsername(response.username);
+    });
+  }
+
+  async function getAllTeams(){
+    await TeamMethods.GetUsersTeam(username).then((response:any)=>{
+      console.log(response);
+    });
+  };
+
+  async function getAllPlayers(){
+    await PlayerMethods.GetAllPlayers().then((response:any)=>{
+      console.log(response);
     });
   }
 
