@@ -30,7 +30,7 @@ import { Button } from "../ui/button";
 const items = [
   {
     title: "Dashboard",
-    url: "/admin",
+    url: "/admin/dashboard",
     icon: LayoutGrid,
     group: "Main Menu"
   },
@@ -52,12 +52,7 @@ const items = [
     icon: Flag,
     group: "Management"
   },
-  {
-    title: "Teams",
-    url: "/admin/teams",
-    icon: Pen,
-    group: "Management"
-  },
+  
   
 ];
 
