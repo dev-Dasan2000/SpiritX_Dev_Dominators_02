@@ -1,6 +1,5 @@
 import express from 'express';
 import pool from '../db.js';
-import bcrypt from 'bcrypt';
 import { authenticateToken } from '../middleware/authentication.js';
 
 const router = express.Router();
@@ -29,7 +28,7 @@ router.get('/:teamname', authenticateToken, async (req, res) => {
 });
 
 // Create new leaderboard
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     try {
         const { teamname, totalpoints, username } = req.body;
         await pool.query(
@@ -47,7 +46,7 @@ router.put('/', authenticateToken, async (req, res) => {
     try {
         const { teamname, totalpoints, username } = req.body;
         await pool.query(
-            'UPDATE leaderboards SET toalpoints = $2 WHERE teamname = $1 && owner = $3',
+            'UPDATE leaderboards SET totalpoints = $2 WHERE teamname = $1 && owner = $3',
             [teamname, totalpoints, username]
         );
         res.json({ message: 'leaderboard updated successfully' });

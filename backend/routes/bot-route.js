@@ -2,6 +2,7 @@ import express from 'express';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from 'dotenv';
 import pool from '../db.js';
+import { authenticateToken } from '../middleware/authentication.js';
 
 dotenv.config();
 const router = express.Router();
@@ -10,7 +11,7 @@ const router = express.Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Chatbot API Route
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     try {
         const { userQuery } = req.body;
 

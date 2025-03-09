@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import AuthMethods from './auth-methods';
 
-const AdminMethods = {
-    GetAllAdmins: async () => {
+const LeaderBoardMethods = {
+    GetAllLeaderBoards: async () => {
         try {
             const retrievedData = await AuthMethods.RefreshToken();
             if (retrievedData.error) {
@@ -12,17 +12,16 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin`,{
+            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`
-
                 }
             })
             if (!response.ok) {
-                throw new Error('Failed to get admins');
+                throw new Error('Failed to get leaderboards');
             }
             const data = await response.json();
             return data;
@@ -31,7 +30,7 @@ const AdminMethods = {
         }
     },
 
-    GetAdmin: async (username : string) => {
+    GetLeaderBoard: async (teamname: string, username: string) => {
         try {
             const retrievedData = await AuthMethods.RefreshToken();
             if (retrievedData.error) {
@@ -41,17 +40,17 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin/${username}`,{
+            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard/${teamname}`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`
-
+                    Authorization: `Bearer ${accessToken}`,
+                    body: JSON.stringify({ username })
                 }
             })
             if (!response.ok) {
-                throw new Error('Failed to get admin');
+                throw new Error('Failed to get leaderboard');
             }
             const data = await response.json();
             return data;
@@ -60,7 +59,7 @@ const AdminMethods = {
         }
     },
 
-    CreateAdmin: async (username : string, password : string) => {
+    CreateLeaderBoard: async (teamname: string, totalpoints: number, username: string) => {
         try {
             const retrievedData = await AuthMethods.RefreshToken();
             if (retrievedData.error) {
@@ -70,17 +69,17 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin`,{
+            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard`, {
                 method: 'POST',
                 headers: {
                     credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
-                    body: JSON.stringify({username, password}),
+                    body: JSON.stringify({ teamname, totalpoints, username })
                 }
             })
             if (!response.ok) {
-                throw new Error('Failed to create admin');
+                throw new Error('Failed to create leaderboard');
             }
             const data = await response.json();
             return data;
@@ -89,7 +88,7 @@ const AdminMethods = {
         }
     },
 
-    UpdateAdmin: async (username : string, password : string) => {
+    UpdateLeaderBoard: async (teamname: string, totalpoints: number, username: string) => {
         try {
             const retrievedData = await AuthMethods.RefreshToken();
             if (retrievedData.error) {
@@ -99,17 +98,17 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin`,{
+            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard`, {
                 method: 'PUT',
                 headers: {
                     credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
-                    body: JSON.stringify({username,password}),
+                    body: JSON.stringify({ teamname, totalpoints, username })
                 }
             })
-            if (!response.ok) {
-                throw new Error('Failed to update admin');
+            if (!response.ok) { 
+                throw new Error('Failed to update leaderboard');
             }
             const data = await response.json();
             return data;
@@ -118,7 +117,7 @@ const AdminMethods = {
         }
     },
 
-    DeleteAdmin: async (username : string) => {
+    DeleteLeaderBoard: async (teamname: string, username: string) => {
         try {
             const retrievedData = await AuthMethods.RefreshToken();
             if (retrievedData.error) {
@@ -128,23 +127,24 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin/${username}`,{
+            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard/${teamname}`, {
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    body: JSON.stringify({ username })
                 }
             })
             if (!response.ok) {
-                throw new Error('Failed to delete admin');
+                throw new Error('Failed to delete leaderboard');
             }
             const data = await response.json();
             return data;
         } catch (error) {
             return error;
         }
-    },
+    }
 }
 
-export default AdminMethods;
+export default LeaderBoardMethods;
