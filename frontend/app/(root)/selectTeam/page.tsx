@@ -32,7 +32,7 @@ export default function Home() {
   const [budget, setBudget] = useState(8500);
   const [activeTab, setActiveTab] = useState('All Players');
   const [searchQuery, setSearchQuery] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   // Check if viewport is mobile or tablet
@@ -132,15 +132,6 @@ export default function Home() {
     return matchesSearch && matchesTab;
   });
 
-  interface Player {
-    id: string;
-    name: string;
-    university: string;
-    price: number;
-    type: string;
-    stats?: PlayerStats;
-  }
-
   const isPlayerSelected = (playerId: string): boolean => {
     return selectedPlayers.some((p: Player) => p.id === playerId);
   };
@@ -152,7 +143,7 @@ export default function Home() {
   const handleTabChange: TabChangeHandler = (tab) => {
     setActiveTab(tab);
     if (isMobile) {
-      setMenuOpen(false); // Close menu after selecting a tab on mobile
+      setFilterOpen(false); // Close filter after selecting a tab on mobile
     }
   };
 
@@ -165,85 +156,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-blue-700">Spirit11</h1>
-            
-            {/* Mobile Hamburger Menu */}
-            {isMobile && (
-              <Button 
-                onClick={() => setMenuOpen(!menuOpen)} 
-                className="lg:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none"
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="h-6 w-6 text-blue-700" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  {menuOpen ? (
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M6 18L18 6M6 6l12 12" 
-                    />
-                  ) : (
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M4 6h16M4 12h16M4 18h16" 
-                    />
-                  )}
-                </svg>
-              </Button>
-            )}
-            
-            {/* Desktop Navigation */}
-            {!isMobile && (
-              <div className="flex flex-row items-center gap-4">
-                <div className="bg-gray-100 rounded-md px-4 py-2">
-                  <p className="text-gray-700">Team: <span className="font-semibold">{selectedPlayers.length}/11 players selected</span></p>
-                </div>
-                <div className="bg-gray-100 rounded-md px-4 py-2">
-                  <p className="text-gray-700">Remaining Budget: <span className="font-semibold text-blue-700">₹{budget.toLocaleString()}</span></p>
-                </div>
-              </div>
-            )}
+      <main className="container mx-auto p-4">
+        <div className="flex flex-row py-4 gap-4 my-auto">
+          <div className="flex flex-col items-center justify-center bg-white rounded-lg px-4 py-2 flex-1 border border-gray-200">
+            <p className="text-gray-500 text-xs uppercase font-medium">Team</p>
+            <p className="text-gray-900 text-lg font-semibold">{selectedPlayers.length}/11</p>
           </div>
-          
-          {/* Mobile Team Info */}
-          {isMobile && (
-            <div className="mt-3 flex flex-row gap-2">
-              <div className="bg-gray-100 rounded-md px-3 py-1 text-sm flex-1">
-                <p className="text-gray-700">Team: <span className="font-semibold">{selectedPlayers.length}/11</span></p>
-              </div>
-              <div className="bg-gray-100 rounded-md px-3 py-1 text-sm flex-1">
-                <p className="text-gray-700">Budget: <span className="font-semibold text-blue-700">₹{budget.toLocaleString()}</span></p>
-              </div>
-            </div>
-          )}
+          <div className="flex flex-col items-center justify-center bg-white rounded-lg px-4 py-2 flex-1 border border-gray-200">
+            <p className="text-gray-500 text-xs uppercase font-medium">Budget</p>
+            <p className="text-blue-700 text-lg font-semibold">₹{budget.toLocaleString()}</p>
+          </div>
         </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-6">
-        {/* Mobile Menu */}
-        {isMobile && menuOpen && (
-          <div className="lg:hidden bg-white rounded-lg shadow-lg mb-6 overflow-hidden">
-            {['All Players', 'Batsmen', 'Bowlers', 'All-rounders', 'Wicket Keepers'].map((tab) => (
-              <button
-                key={tab}
-                className={`w-full px-4 py-3 text-left ${activeTab === tab ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
-                onClick={() => handleTabChange(tab)}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-        )}
 
         {/* Desktop Tabs */}
         {!isMobile && (
@@ -251,7 +174,7 @@ export default function Home() {
             {['All Players', 'Batsmen', 'Bowlers', 'All-rounders', 'Wicket Keepers'].map((tab) => (
               <button
                 key={tab}
-                className={`px-4 py-3 text-center flex-1 min-w-max rounded-md ${activeTab === tab ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                className={`px-4 py-3 text-center flex-1 min-w-max rounded-md cursor-pointer ${activeTab === tab ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
                 onClick={() => handleTabChange(tab)}
               >
                 {tab}
@@ -265,12 +188,43 @@ export default function Home() {
           <div className="lg:hidden mb-4 flex justify-between items-center">
             <h2 className="text-lg font-semibold text-blue-700">{activeTab}</h2>
             <button 
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-blue-600 text-sm font-medium"
+              onClick={() => setFilterOpen(!filterOpen)}
+              className="text-blue-600 text-sm font-medium flex items-center"
             >
-              Change Category
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 mr-1" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" 
+                />
+              </svg>
+              Filter Players
             </button>
           </div>
+        )}
+
+        {/* Mobile Filter Menu */}
+        {isMobile && filterOpen && (
+          <>
+          <div className="lg:hidden bg-white rounded-lg shadow-lg mb-6 overflow-hidden">
+            {['All Players', 'Batsmen', 'Bowlers', 'All-rounders', 'Wicket Keepers'].map((tab) => (
+              <button
+                key={tab}
+                className={`w-full px-4 py-3 text-left ${activeTab === tab ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                onClick={() => handleTabChange(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        </>
         )}
 
         {/* Search Bar */}
@@ -290,7 +244,7 @@ export default function Home() {
             <div key={player.id} className="bg-blue-700 rounded-lg p-4 text-white shadow-md">
               <div className="flex justify-between items-center mb-3">
                 <div>
-                  <h2 className="text-lg font-semibold">{player.name}</h2>
+                  <h2 className="text-lg font-semibold">{player.name} - <span className='text-yellow-300'>{player.type}</span></h2>
                   <p className="text-sm text-blue-200">{player.university}</p>
                 </div>
                 <div className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-full">
@@ -299,51 +253,53 @@ export default function Home() {
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-4">
-                {player.type === 'Batsman' || player.type === 'All-rounder' ? (
+                {player.stats && player.type === 'Batsman' || player.type === 'All-rounder' ? (
                   <>
                     <div className="text-center">
-                      <p className="text-xl font-bold">{player.stats.runs}</p>
+                      <p className="text-xl font-bold">{player.stats?.runs}</p>
                       <p className="text-xs text-blue-200">Runs</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xl font-bold">{player.stats.average}</p>
+                      <p className="text-xl font-bold">{player.stats?.average}</p>
                       <p className="text-xs text-blue-200">Average</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xl font-bold">{player.stats.strikeRate}</p>
+                      <p className="text-xl font-bold">{player.stats?.strikeRate}</p>
                       <p className="text-xs text-blue-200">Strike Rate</p>
                     </div>
                   </>
                 ) : null}
                 
-                {player.type === 'Bowler' ? (
+                {player.stats && player.type === 'Bowler' ? (
                   <>
                     <div className="text-center">
-                      <p className="text-xl font-bold">{player.stats.wickets}</p>
+                      <p className="text-xl font-bold">{player.stats?.wickets}</p>
                       <p className="text-xs text-blue-200">Wickets</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xl font-bold">{player.stats.economy}</p>
+                      <p className="text-xl font-bold">{player.stats?.economy}</p>
                       <p className="text-xs text-blue-200">Economy</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xl font-bold">{player.stats.runs}</p>
+                      <p className="text-xl font-bold">{player.stats?.runs}</p>
                       <p className="text-xs text-blue-200">Runs</p>
                     </div>
                   </>
                 ) : null}
                 
-                <div className="text-center">
-                  <p className="text-xl font-bold">{player.stats.matches}</p>
-                  <p className="text-xs text-blue-200">Matches</p>
-                </div>
+                {player.stats && (
+                  <div className="text-center">
+                    <p className="text-xl font-bold">{player.stats.matches}</p>
+                    <p className="text-xs text-blue-200">Matches</p>
+                  </div>
+                )}
               </div>
 
               <button
                 className={`w-full py-2 rounded-md flex items-center justify-center ${
                   isPlayerSelected(player.id)
                     ? 'bg-red-500 cursor-not-allowed opacity-70'
-                    : 'bg-yellow-400 hover:bg-yellow-500 text-black'
+                    : 'bg-yellow-400 hover:bg-yellow-500 text-black cursor-pointer'
                 }`}
                 onClick={() => {
                   if (!isPlayerSelected(player.id)) {
@@ -393,7 +349,7 @@ export default function Home() {
                 </div>
                 <button
                   onClick={() => removeFromTeam(player.id)}
-                  className="bg-red-100 hover:bg-red-200 text-red-600 font-medium px-2 md:px-3 py-1 rounded-md text-xs md:text-sm flex items-center flex-shrink-0 ml-2"
+                  className="bg-red-100 hover:bg-red-200 cursor-pointer text-red-600 font-medium px-2 md:px-3 py-1 rounded-md text-xs md:text-sm flex items-center flex-shrink-0 ml-2"
                 >
                   <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
