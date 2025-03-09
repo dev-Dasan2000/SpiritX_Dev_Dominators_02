@@ -27,7 +27,7 @@ router.get('/:playername', authenticateToken, async (req, res) => {
 });
 
 // Create new player
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     try {
         const { playerid, playername, speciality, price, university} = req.body;
         await pool.query(
