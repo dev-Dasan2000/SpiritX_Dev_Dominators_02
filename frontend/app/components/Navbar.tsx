@@ -35,7 +35,7 @@ const Navbar = () => {
           className="md:hidden text-white focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={35} /> : <Menu size={35} />}
         </button>
 
         {/* Desktop Navigation */}
