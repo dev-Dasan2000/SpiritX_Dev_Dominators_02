@@ -8,7 +8,7 @@ const UserMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/users`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -33,7 +33,7 @@ const UserMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/users/${username}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${username}`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -54,13 +54,14 @@ const UserMethods = {
 
     CreateUser: async (username: string, password: string) => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/users`, {
+            console.log(username, password);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
-                    body: JSON.stringify({ username, password })
-                }
+                },
+                body: JSON.stringify({ username, password })
             })
             if (!response.ok) {
                 throw new Error('Failed to create user');
@@ -79,7 +80,7 @@ const UserMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/users/${username}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${username}`, {
                 method: 'PUT',
                 headers: {
                     credentials: 'include',
@@ -105,7 +106,7 @@ const UserMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/users/${username}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${username}`, {
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',

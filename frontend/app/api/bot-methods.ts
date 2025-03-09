@@ -12,7 +12,7 @@ const BotMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/bot`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/bot`, {
                 method: 'POST',
                 headers: {
                     credentials: 'include',

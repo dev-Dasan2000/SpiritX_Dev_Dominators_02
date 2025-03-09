@@ -8,7 +8,7 @@ const TeamMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/teams`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`,{
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -33,7 +33,7 @@ const TeamMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/teams/${teamname}`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamname}`,{
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -58,7 +58,7 @@ const TeamMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/teams`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`,{
                 method: 'POST',
                 headers: {
                     credentials: 'include',
@@ -84,7 +84,7 @@ const TeamMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/teams`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams`,{
                 method: 'PUT',
                 headers: {
                     credentials: 'include',
@@ -110,7 +110,7 @@ const TeamMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/teams/${teamname}`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamname}`,{
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',

@@ -12,7 +12,7 @@ const PlayerMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/players`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -41,7 +41,7 @@ const PlayerMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/players/${playerid}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players/${playerid}`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -70,7 +70,7 @@ const PlayerMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/players`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`, {
                 method: 'POST',
                 headers: {
                     credentials: 'include',
@@ -100,7 +100,7 @@ const PlayerMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/players`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`, {
                 method: 'PUT',
                 headers: {
                     credentials: 'include',
@@ -129,7 +129,7 @@ const PlayerMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/players`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/players`, {
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',

@@ -12,7 +12,7 @@ const LeaderBoardMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/leaderboard`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -40,7 +40,7 @@ const LeaderBoardMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard/${teamname}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/leaderboard/${teamname}`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -69,7 +69,7 @@ const LeaderBoardMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/leaderboard`, {
                 method: 'POST',
                 headers: {
                     credentials: 'include',
@@ -98,7 +98,7 @@ const LeaderBoardMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/leaderboard`, {
                 method: 'PUT',
                 headers: {
                     credentials: 'include',
@@ -127,7 +127,7 @@ const LeaderBoardMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/leaderboard/${teamname}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/leaderboard/${teamname}`, {
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',

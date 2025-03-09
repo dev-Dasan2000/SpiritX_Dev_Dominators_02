@@ -3,7 +3,7 @@ import 'dotenv/config';
 const AuthMethods = {
     UserLogIn: async (username : string, password : string, rememberMe : boolean) => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/auth/loginUser`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/loginUser`,{
                 method: 'POST',
                 headers: {
                     credentials: 'include',
@@ -23,7 +23,7 @@ const AuthMethods = {
 
     AdminLogIn: async (username : string, password : string, rememberMe : boolean) => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/auth/loginAdmin`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/loginAdmin`,{
                 method: 'POST',
                 headers: {
                     credentials: 'include',
@@ -43,7 +43,7 @@ const AuthMethods = {
 
     RefreshToken: async () => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/auth/refresh_token`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh_token`,{
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -62,7 +62,7 @@ const AuthMethods = {
 
     UserLogOut: async () => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/auth/refresh_token`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh_token`,{
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',

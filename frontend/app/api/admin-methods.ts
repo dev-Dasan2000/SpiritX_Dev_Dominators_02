@@ -12,13 +12,12 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin`,{
                 method: 'GET',
                 headers: {
                     credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`
-
                 }
             })
             if (!response.ok) {
@@ -41,13 +40,12 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin/${username}`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/${username}`,{
                 method: 'GET',
+                credentials: 'include',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`
-
                 }
             })
             if (!response.ok) {
@@ -62,22 +60,13 @@ const AdminMethods = {
 
     CreateAdmin: async (username : string, password : string) => {
         try {
-            const retrievedData = await AuthMethods.RefreshToken();
-            if (retrievedData.error) {
-                throw new Error(retrievedData.error);
-            }
-            const accessToken = retrievedData.accessToken;
-            if (!accessToken) {
-                throw new Error('No access token');
-            }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin`,{
                 method: 'POST',
+                credentials: 'include',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                    body: JSON.stringify({username, password}),
-                }
+                },
+                body: JSON.stringify({username, password}),
             })
             if (!response.ok) {
                 throw new Error('Failed to create admin');
@@ -99,14 +88,14 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin`,{
                 method: 'PUT',
+                credentials: 'include',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
-                    body: JSON.stringify({username,password}),
-                }
+                },
+                body: JSON.stringify({username,password}),
             })
             if (!response.ok) {
                 throw new Error('Failed to update admin');
@@ -128,10 +117,10 @@ const AdminMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/admin/${username}`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/${username}`,{
                 method: 'DELETE',
+                credentials: 'include',
                 headers: {
-                    credentials: 'include',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`
                 }
