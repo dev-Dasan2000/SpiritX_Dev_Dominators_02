@@ -152,7 +152,11 @@ function TeamCard({ team, maxMembers }: { team: Team; maxMembers: number }) {
       {/* Card Header with Team Name */}
       <div className={`${team.color} py-4 px-5 flex flex-row justify-between`}>
         <h2 className="text-xl font-bold text-white">{team.name}</h2>
-        <Button className='cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-black'>View</Button>
+        <Link href={`/user/ViewTeamMembers/${team.id}`}>
+          <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">
+            View
+          </button>
+        </Link>
       </div>
       
       {/* Card Content */}

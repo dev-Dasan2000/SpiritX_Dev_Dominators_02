@@ -64,13 +64,15 @@ const Leaderboard: React.FC = () => {
   return (
     <div className="bg-gray-100 min-h-screen w-full">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Leaderboard</h1>
+        <h1 className="text-4xl font-bold text-center text-blue-700 mb-8">Leaderboard</h1>
 
         <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
-            <p className="text-3xl font-bold text-blue-500">{selectedTeam.rank}</p>
-            <p className="text-gray-600 font-medium mb-3">Team Rank</p>
+          <div className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200">
+            <p className="text-3xl font-bold text-blue-700">{selectedTeam.rank}</p>
+            <p className="text-gray-500 font-medium mb-3">Team Rank</p>
+            <label htmlFor="team-select" className="sr-only">Select Team</label>
             <select 
+              id="team-select"
               value={selectedTeamId}
               onChange={(e) => setSelectedTeamId(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none bg-white"
@@ -82,13 +84,13 @@ const Leaderboard: React.FC = () => {
               ))}
             </select>
           </div>
-          <div className="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition-shadow duration-300">
-            <p className="text-3xl font-bold text-blue-500">{selectedTeam.points}</p>
-            <p className="text-gray-600 font-medium">Team Points</p>
+          <div className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200">
+            <p className="text-3xl font-bold text-blue-700">{selectedTeam.points}</p>
+            <p className="text-gray-500 font-medium">Team Points</p>
           </div>
-          <div className="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition-shadow duration-300">
-            <p className="text-3xl font-bold text-blue-500">{topScore}</p>
-            <p className="text-gray-600 font-medium">Top Score</p>
+          <div className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200">
+            <p className="text-3xl font-bold text-blue-700">{topScore}</p>
+            <p className="text-gray-500 font-medium">Top Score</p>
           </div>
         </div>
 
@@ -99,7 +101,6 @@ const Leaderboard: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none"
-            style={{ boxShadow: 'none' }}
           />
           <svg
             className="absolute left-3 top-3 text-gray-500"
@@ -115,8 +116,8 @@ const Leaderboard: React.FC = () => {
           </svg>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="grid grid-cols-4 py-4 px-6 font-bold bg-gray-200">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+          <div className="grid grid-cols-4 py-4 px-6 font-bold bg-blue-700 text-white">
             <div>Rank</div>
             <div>Username</div>
             <div>Team</div>
@@ -129,7 +130,7 @@ const Leaderboard: React.FC = () => {
                 key={`${entry.userId}-${entry.teamName}`}
                 className={`grid grid-cols-4 py-4 px-6 items-center border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150 ${
                   entry.userId === currentUserId && entry.teamName === selectedTeam.teamName 
-                    ? 'bg-blue-50 border-l-4 border-blue-500' 
+                    ? 'bg-blue-50 border-l-4 border-blue-700' 
                     : entry.userId === currentUserId
                     ? 'bg-blue-50/30 border-l-4 border-blue-300'
                     : ''
@@ -138,24 +139,32 @@ const Leaderboard: React.FC = () => {
                 <div
                   className={`font-bold flex items-center ${
                     entry.rank === 1
-                      ? 'text-yellow-500'
+                      ? 'text-yellow-400'
                       : entry.rank === 2
                       ? 'text-gray-400'
                       : entry.rank === 3
-                      ? 'text-orange-500'
+                      ? 'text-yellow-600'
                       : 'text-gray-600'
                   }`}
                 >
-                  {entry.rank === 1 && (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 2a1 1 0 00-.894.553L7.382 6H4a1 1 0 000 2h2.382l-1.724 3.447A1 1 0 004 12h12a1 1 0 00.894-1.447L15.618 8H18a1 1 0 100-2h-3.382l-1.724-3.447A1 1 0 0010 2z" clipRule="evenodd" />
-                    </svg>
-                  )}
                   {entry.rank}
                 </div>
                 <div className="font-medium">{entry.username}</div>
-                <div className={`font-medium ${entry.userId === currentUserId && entry.teamName === selectedTeam.teamName ? 'font-bold text-blue-500' : ''}`}>
+                <div className={`flex flex-row gap-2 font-medium ${entry.userId === currentUserId && entry.teamName === selectedTeam.teamName ? 'font-bold text-blue-700' : ''}`}>
                   {entry.teamName}
+                  {entry.rank === 1 && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="15"
+                    height="15"
+                    fill="yellow"
+                    stroke="black"
+                    stroke-width="1"
+                  >
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                  )}
                 </div>
                 <div className="text-right font-semibold">{entry.points}</div>
               </div>
