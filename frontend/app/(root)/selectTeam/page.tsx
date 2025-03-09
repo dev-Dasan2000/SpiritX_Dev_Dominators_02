@@ -5,35 +5,53 @@ import Head from 'next/head';
 import { Button } from '@/app/components/ui/button';
 
 export default function Home() {
-  const [selectedPlayers, setSelectedPlayers] = useState([
+  // Teams state to manage multiple teams
+  const [teams, setTeams] = useState([
     {
-      id: 'AK',
-      name: 'Ajay Kumar',
-      university: 'Mumbai University',
-      price: 1400,
-      type: 'Bowler'
+      id: 1,
+      name: "Dream Team",
+      players: [
+        {
+          id: 'AK',
+          name: 'Ajay Kumar',
+          university: 'Mumbai University',
+          price: 1400,
+          type: 'Bowler'
+        },
+        {
+          id: 'RP',
+          name: 'Rohit Patel',
+          university: 'Pune University',
+          price: 0,
+          type: 'Batsman'
+        }
+      ],
+      budget: 8500
     },
     {
-      id: 'RP',
-      name: 'Rohit Patel',
-      university: 'Pune University',
-      price: 0,
-      type: 'Batsman'
-    },
-    {
-      id: 'SK',
-      name: 'Sunil Kumar',
-      university: 'Bangalore University',
-      price: 0,
-      type: 'All-rounder'
+      id: 2,
+      name: "Super XI",
+      players: [
+        {
+          id: 'SK',
+          name: 'Sunil Kumar',
+          university: 'Bangalore University',
+          price: 0,
+          type: 'All-rounder'
+        }
+      ],
+      budget: 9000
     }
   ]);
   
-  const [budget, setBudget] = useState(8500);
+  const [selectedTeamId, setSelectedTeamId] = useState(null);
+  const [showTeamSelector, setShowTeamSelector] = useState(false);
   const [activeTab, setActiveTab] = useState('All Players');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+ 
 
   // Check if viewport is mobile or tablet
   useEffect(() => {
@@ -111,20 +129,67 @@ export default function Home() {
     stats?: PlayerStats;
   }
 
-  const addToTeam = (player: Player) => {
-    if (selectedPlayers.length < 11 && !selectedPlayers.some(p => p.id === player.id)) {
-      setSelectedPlayers([...selectedPlayers, player]);
-      setBudget(budget - player.price);
-    }
+  interface Team {
+    id: number;
+    name: string;
+    players: Player[];
+    budget: number;
+  }
+
+  // Start team selection process when "Add to Team" is clicked
+  const initiateAddToTeam = (player: Player) => {
+    // Show teams that don't have 11 members yet
+    setShowTeamSelector(true);
+    
+    // Store the player temporarily
+    localStorage.setItem('pendingPlayer', JSON.stringify(player));
   };
 
-  const removeFromTeam = (playerId: string) => {
-    const player = selectedPlayers.find((p: Player) => p.id === playerId);
-    setSelectedPlayers(selectedPlayers.filter((p: Player) => p.id !== playerId));
-    if (player) {
-      setBudget(budget + player.price);
-    }
+  // Add player to the selected team
+  const addToTeam = (teamId: number) => {
+    const pendingPlayerString = localStorage.getItem('pendingPlayer');
+    if (!pendingPlayerString) return;
+    
+    const player = JSON.parse(pendingPlayerString);
+    localStorage.removeItem('pendingPlayer');
+    
+    setTeams(teams.map(team => {
+      if (team.id === teamId) {
+        // Check if player already exists in team and if team has less than 11 players
+        if (team.players.some(p => p.id === player.id) || team.players.length >= 11) {
+          return team;
+        }
+        
+        // Add player and update budget
+        return {
+          ...team,
+          players: [...team.players, player],
+          budget: team.budget - player.price
+        };
+      }
+      return team;
+    }));
+    
+    setShowTeamSelector(false);
   };
+
+  const removeFromTeam = (teamId: number, playerId: string) => {
+    setTeams(teams.map(team => {
+      if (team.id === teamId) {
+        const player = team.players.find(p => p.id === playerId);
+        
+        return {
+          ...team,
+          players: team.players.filter(p => p.id !== playerId),
+          budget: player ? team.budget + player.price : team.budget
+        };
+      }
+      return team;
+    }));
+  };
+
+ 
+   
 
   const filteredPlayers = players.filter(player => {
     const matchesSearch = player.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -132,8 +197,8 @@ export default function Home() {
     return matchesSearch && matchesTab;
   });
 
-  const isPlayerSelected = (playerId: string): boolean => {
-    return selectedPlayers.some((p: Player) => p.id === playerId);
+  const isPlayerInAnyTeam = (playerId: string): boolean => {
+    return teams.some(team => team.players.some(p => p.id === playerId));
   };
 
   interface TabChangeHandler {
@@ -147,6 +212,9 @@ export default function Home() {
     }
   };
 
+  // Get teams that don't have 11 players yet
+  const availableTeams = teams.filter(team => team.players.length < 11);
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Head>
@@ -157,16 +225,63 @@ export default function Home() {
       </Head>
 
       <main className="container mx-auto p-4">
+        {/* Team Statistics Summary */}
         <div className="flex flex-row py-4 gap-4 my-auto">
           <div className="flex flex-col items-center justify-center bg-white rounded-lg px-4 py-2 flex-1 border border-gray-200">
-            <p className="text-gray-500 text-xs uppercase font-medium">Team</p>
-            <p className="text-gray-900 text-lg font-semibold">{selectedPlayers.length}/11</p>
+            <p className="text-gray-500 text-xs uppercase font-medium">Teams</p>
+            <p className="text-gray-900 text-lg font-semibold">{teams.length}</p>
           </div>
           <div className="flex flex-col items-center justify-center bg-white rounded-lg px-4 py-2 flex-1 border border-gray-200">
-            <p className="text-gray-500 text-xs uppercase font-medium">Budget</p>
-            <p className="text-blue-700 text-lg font-semibold">₹{budget.toLocaleString()}</p>
+            <p className="text-gray-500 text-xs uppercase font-medium">Total Players</p>
+            <p className="text-blue-700 text-lg font-semibold">
+              {teams.reduce((total, team) => total + team.players.length, 0)}
+            </p>
           </div>
         </div>
+
+        
+
+
+        {/* Team Selector Modal */}
+        {showTeamSelector && (
+          <div className="fixed inset-0 flex justify-center items-center bg-transparent  bg-opacity-50 backdrop-blur-md z-50 transition-opacity duration-300">
+            <div className="bg-white rounded-lg p-6 w-11/12 max-w-md">
+              <h2 className="text-xl font-bold text-blue-700 mb-4">Select Team</h2>
+              
+              {availableTeams.length > 0 ? (
+                <div className="space-y-3 mb-4">
+                  {availableTeams.map(team => (
+                    <button
+                      key={team.id}
+                      className="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 p-3 rounded-lg flex justify-between items-center"
+                      onClick={() => addToTeam(team.id)}
+                    >
+                      <div>
+                        <p className="font-medium">{team.name}</p>
+                        <p className="text-sm text-gray-500">{team.players.length}/11 players</p>
+                      </div>
+                      <div className="text-blue-700">₹{team.budget.toLocaleString()}</div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center py-4 text-gray-500 mb-4">No teams available or all teams are full</p>
+              )}
+              
+              <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    setShowTeamSelector(false);
+                    localStorage.removeItem('pendingPlayer');
+                  }}
+                  className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Desktop Tabs */}
         {!isMobile && (
@@ -212,7 +327,6 @@ export default function Home() {
 
         {/* Mobile Filter Menu */}
         {isMobile && filterOpen && (
-          <>
           <div className="lg:hidden bg-white rounded-lg shadow-lg mb-6 overflow-hidden">
             {['All Players', 'Batsmen', 'Bowlers', 'All-rounders', 'Wicket Keepers'].map((tab) => (
               <button
@@ -224,7 +338,6 @@ export default function Home() {
               </button>
             ))}
           </div>
-        </>
         )}
 
         {/* Search Bar */}
@@ -297,18 +410,18 @@ export default function Home() {
 
               <button
                 className={`w-full py-2 rounded-md flex items-center justify-center ${
-                  isPlayerSelected(player.id)
+                  isPlayerInAnyTeam(player.id)
                     ? 'bg-red-500 cursor-not-allowed opacity-70'
                     : 'bg-yellow-400 hover:bg-yellow-500 text-black cursor-pointer'
                 }`}
                 onClick={() => {
-                  if (!isPlayerSelected(player.id)) {
-                    addToTeam(player);
+                  if (!isPlayerInAnyTeam(player.id)) {
+                    initiateAddToTeam(player);
                   }
                 }}
-                disabled={isPlayerSelected(player.id)}
+                disabled={isPlayerInAnyTeam(player.id)}
               >
-                {isPlayerSelected(player.id) ? (
+                {isPlayerInAnyTeam(player.id) ? (
                   <>
                     <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -328,41 +441,64 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Selected Team */}
-        <div className="bg-white rounded-lg p-4 md:p-6 shadow-md">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-blue-700">Your Selected Team</h2>
-            <p className="text-gray-700 text-sm md:text-base">{selectedPlayers.length}/11 Players</p>
-          </div>
-
-          <div className="space-y-3">
-            {selectedPlayers.map((player) => (
-              <div key={player.id} className="flex items-center justify-between border-b border-gray-200 pb-2">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center text-white mr-2 md:mr-3 flex-shrink-0">
-                    {player.id}
+        {/* Teams Section */}
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-blue-700 mb-4">Your Teams</h2>
+          
+          {teams.length === 0 ? (
+            <p className="text-gray-500 text-center py-4 bg-white rounded-lg shadow-md">No teams created yet</p>
+          ) : (
+            <div className="space-y-4">
+              {teams.map(team => (
+                <div key={team.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-blue-700 text-white p-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-lg font-bold">{team.name}</h3>
+                      <div className="flex space-x-3">
+                        <span className="bg-blue-600 px-3 py-1 rounded-full text-sm">
+                          {team.players.length}/11 Players
+                        </span>
+                        <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-medium">
+                          ₹{team.budget.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="overflow-hidden">
-                    <p className="font-medium text-sm md:text-base truncate">{player.name}</p>
-                    <p className="text-xs md:text-sm text-gray-500 truncate">{player.university}</p>
+                  
+                  <div className="p-4">
+                    {team.players.length > 0 ? (
+                      <div className="space-y-3">
+                        {team.players.map(player => (
+                          <div key={player.id} className="flex items-center justify-between border-b border-gray-200 pb-2">
+                            <div className="flex items-center">
+                              <div className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center text-white mr-3 flex-shrink-0">
+                                {player.id}
+                              </div>
+                              <div>
+                                <p className="font-medium">{player.name}</p>
+                                <p className="text-sm text-gray-500">{player.university} - {player.type}</p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => removeFromTeam(team.id, player.id)}
+                              className="bg-red-100 hover:bg-red-200 text-red-600 font-medium px-3 py-1 rounded-md text-sm flex items-center"
+                            >
+                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-center py-4">No players in this team yet</p>
+                    )}
                   </div>
                 </div>
-                <button
-                  onClick={() => removeFromTeam(player.id)}
-                  className="bg-red-100 hover:bg-red-200 cursor-pointer text-red-600 font-medium px-2 md:px-3 py-1 rounded-md text-xs md:text-sm flex items-center flex-shrink-0 ml-2"
-                >
-                  <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
-                  Delete
-                </button>
-              </div>
-            ))}
-            
-            {selectedPlayers.length === 0 && (
-              <p className="text-gray-500 text-center py-4">No players selected yet</p>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>
