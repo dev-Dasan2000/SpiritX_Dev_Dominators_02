@@ -25,6 +25,8 @@ export default function TeamManagement() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
   
+
+  
   const handleCreateTeam = () => {
     if (newTeamName.trim()) {
       const newTeam: Team = {
@@ -167,7 +169,7 @@ function TeamCard({ team, maxMembers }: { team: Team; maxMembers: number }) {
         </div>
         
         {/* Add Members Button */}
-        <Link href={`/selectTeam`} passHref>
+        <Link href={`/user/selectTeam`} passHref>
           <div className={`mt-6 flex items-center justify-between ${
             isFull 
               ? 'bg-gray-100 cursor-not-allowed' 
