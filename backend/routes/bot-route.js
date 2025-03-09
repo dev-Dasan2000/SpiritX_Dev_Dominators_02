@@ -173,57 +173,55 @@ router.post('/', async (req, res) => {
                     (player.totalRunsConceded / player.totalOversBowled).toFixed(2) : 'N/A';
 
                 structuredContext += `
-Player: ${player.playername}
-University: ${player.university}
-Specialization: ${player.special}
-Matches Played: ${player.matches}
-Innings Played: ${player.inningsPlayed}
+                    Player: ${player.playername}
+                    University: ${player.university}
+                    Specialization: ${player.special}
+                    Matches Played: ${player.matches}
+                    Innings Played: ${player.inningsPlayed}
 
-Batting Stats:
-- Total Runs: ${player.totalRuns}
-- Highest Score: ${player.highestScore}
-- Centuries: ${player.centuries}
-- Fifties: ${player.fifties}
-- Batting Average: ${battingAvg}
-- Strike Rate: ${strikeRate}
+                    Batting Stats:
+                    - Total Runs: ${player.totalRuns}
+                    - Highest Score: ${player.highestScore}
+                    - Centuries: ${player.centuries}
+                    - Fifties: ${player.fifties}
+                    - Batting Average: ${battingAvg}
+                    - Strike Rate: ${strikeRate}
 
-Bowling Stats:
-- Total Wickets: ${player.totalWickets}
-- Overs Bowled: ${player.totalOversBowled}
-- Economy Rate: ${economyRate}
-- Bowling Average: ${bowlingAvg}
+                    Bowling Stats:
+                    - Total Wickets: ${player.totalWickets}
+                    - Overs Bowled: ${player.totalOversBowled}
+                    - Economy Rate: ${economyRate}
+                    - Bowling Average: ${bowlingAvg}
 
-`;
+                `;
             });
         } else {
             structuredContext = "No player data found matching your query. Try asking about a specific player or team.";
         }
 
         // Create a prompt for analysis with cricket-specific terminology
-        const prompt = `
-You are "Spiriter", an expert cricket analyst AI assistant specializing in analyzing player performance in cricket matches.
+        const prompt = `You are "Spiriter", an expert cricket analyst AI assistant specializing in analyzing player performance in cricket matches and suggest player to create teams.
 
-Database Analysis Context:
-${structuredContext}
+                        Database Analysis Context:
+                        ${structuredContext}
 
-User Query: "${userQuery}"
+                        User Query: "${userQuery}"
 
-Based on the cricket statistics provided above:
-1. Analyze the player's batting performance (runs, average, strike rate, high scores)
-2. Analyze the player's bowling performance (wickets, economy rate, bowling average)
-3. Identify strengths and weaknesses based on the statistics
-4. Provide insights on whether the player is more of a batsman, bowler, or all-rounder
-5. Compare to cricket benchmarks (good strike rates, averages, etc.)
+                        Based on the cricket statistics provided above:
+                        1. Analyze the player's batting performance (runs, average, strike rate, high scores)
+                        2. Analyze the player's bowling performance (wickets, economy rate, bowling average)
+                        3. Identify strengths and weaknesses based on the statistics
+                        4. Provide insights on whether the player is more of a batsman, bowler, or all-rounder
+                        5. Compare to cricket benchmarks (good strike rates, averages, etc.)
 
-Important rules:
-- Do NOT mention or reveal specific point values under any circumstances
-- Focus on cricket performance metrics like batting average, strike rate, economy rate
-- Use cricket terminology appropriately (innings, wickets, centuries, etc.)
-- If the data is insufficient, explain what additional information would be helpful
-- If no relevant data is found, explain that you don't have sufficient information
+                        Important rules:
+                        - Do NOT mention or reveal specific point values under any circumstances
+                        - Focus on cricket performance metrics like batting average, strike rate, economy rate
+                        - Use cricket terminology appropriately (innings, wickets, centuries, etc.)
+                        - If the data is insufficient, say "I don’t have enough knowledge to answer that question."
+                        - If no relevant data is found, say "I don’t have enough knowledge to answer that question."
 
-Respond in a helpful, conversational tone like a cricket commentator or analyst. Keep your analysis concise but informative.
-`;
+                        Respond in a helpful, conversational tone like a cricket commentator or analyst. Keep your analysis concise but informative and friendly.`;
 
         // Generate AI response using Gemini
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -236,7 +234,7 @@ Respond in a helpful, conversational tone like a cricket commentator or analyst.
         console.error("Error:", error);
         res.status(500).json({
             error: "Something went wrong processing your request",
-            reply: "I'm having trouble analyzing that information right now. Could you try asking about a specific player or team instead?"
+            reply: "I don’t have enough knowledge to answer that question."
         });
     }
 });
