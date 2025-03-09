@@ -12,7 +12,7 @@ const MatchesMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/matches`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -39,7 +39,7 @@ const MatchesMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/matches/${matchid}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/${matchid}`, {
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -66,7 +66,7 @@ const MatchesMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/matches`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches`, {
                 method: 'POST',
                 headers: {
                     credentials: 'include',
@@ -94,7 +94,7 @@ const MatchesMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/matches/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/`, {
                 method: 'PUT',
                 headers: {
                     credentials: 'include',
@@ -122,7 +122,7 @@ const MatchesMethods = {
             if (!accessToken) {
                 throw new Error('No access token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/matches/${matchid}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/matches/${matchid}`, {
                 method: 'DELETE',
                 headers: {
                     credentials: 'include',

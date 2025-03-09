@@ -8,7 +8,7 @@ const TournamentMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/tournament`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament`,{
                 method: 'GET',
                 headers: {
                     credentials: 'include',
@@ -33,7 +33,7 @@ const TournamentMethods = {
             if (!retrievedData.accessToken) {
                 throw new Error('Failed to refresh token');
             }
-            const response = await fetch(`${process.env.BACKEND_URL}/tournament/${matchid}`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tournament/${matchid}`,{
                 method: 'GET',
                 headers: {
                     credentials: 'include',
