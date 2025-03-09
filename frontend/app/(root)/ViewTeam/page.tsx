@@ -17,9 +17,9 @@ const MAX_TEAM_MEMBERS = 11;
 
 export default function TeamManagement() {
   const [teams, setTeams] = useState<Team[]>([
-    { id: '1', name: 'Dream Team', memberCount: 11, color: 'bg-blue-500' },
-    { id: '2', name: 'Alpha Squad', memberCount: 8, color: 'bg-blue-800' },
-    { id: '3', name: 'Tech Titans', memberCount: 5, color: 'bg-slate-600' },
+    { id: '1', name: 'Dream Team', memberCount: 11, color: 'bg-blue-700' },
+    { id: '2', name: 'Alpha Squad', memberCount: 8, color: 'bg-blue-700' },
+    { id: '3', name: 'Tech Titans', memberCount: 5, color: 'bg-blue-700' },
   ]);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -31,7 +31,7 @@ export default function TeamManagement() {
         id: Date.now().toString(),
         name: newTeamName,
         memberCount: 0,
-        color: 'bg-blue-500',
+        color: 'bg-blue-700',
       };
       
       setTeams([...teams, newTeam]);
@@ -41,14 +41,14 @@ export default function TeamManagement() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <header className="bg-white text-gray-700 py-6 px-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Team Management</h1>
+          <h1 className="text-2xl font-bold text-blue-700">Team Management</h1>
           <button 
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors"
+            className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-md transition-colors"
           >
             <Plus size={20} />
             <span>Create Team</span>
@@ -58,7 +58,7 @@ export default function TeamManagement() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-6">
-        <div className="mb-4 flex items-center gap-2 text-blue-700 bg-blue-50 p-3 rounded-md">
+        <div className="mb-4 flex items-center gap-2 bg-blue-200 text-blue-700 p-3 rounded-md">
           <AlertCircle size={18} />
           <p>Teams can have a maximum of {MAX_TEAM_MEMBERS} members.</p>
         </div>
@@ -73,10 +73,10 @@ export default function TeamManagement() {
             {/* Create New Team Card */}
             <div 
               onClick={() => setShowCreateModal(true)}
-              className="border-2 border-dashed border-gray-300 rounded-lg h-48 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+              className="border-2 border-dashed border-gray-300 rounded-lg h-48 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
             >
               <div className="bg-gray-100 p-4 rounded-full">
-                <Plus size={30} className="text-gray-400" />
+                <Plus size={30} className="text-blue-700" />
               </div>
               <p className="mt-4 text-gray-500 font-medium">Create New Team</p>
             </div>
@@ -88,7 +88,7 @@ export default function TeamManagement() {
       {showCreateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">Create New Team</h2>
+            <h2 className="text-xl font-bold mb-4 text-blue-700">Create New Team</h2>
             <div className="mb-4">
               <label htmlFor="teamName" className="block text-sm font-medium text-gray-700 mb-1">
                 Team Name
@@ -98,7 +98,7 @@ export default function TeamManagement() {
                 id="teamName"
                 value={newTeamName}
                 onChange={(e) => setNewTeamName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700"
                 placeholder="Enter team name"
               />
             </div>
@@ -114,7 +114,7 @@ export default function TeamManagement() {
               </button>
               <button 
                 onClick={handleCreateTeam}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-600 transition-colors"
               >
                 Create Team
               </button>
@@ -135,7 +135,7 @@ function TeamCard({ team, maxMembers }: { team: Team; maxMembers: number }) {
       {/* Card Header with Team Name */}
       <div className={`${team.color} py-4 px-5 flex flex-row justify-between`}>
         <h2 className="text-xl font-bold text-white">{team.name}</h2>
-        <Button className='cursor-pointer bg-yellow-600 text-gray-300 hover:bg-yellow-700'>View</Button>
+        <Button className='cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-black'>View</Button>
       </div>
       
       {/* Card Content */}
@@ -143,9 +143,9 @@ function TeamCard({ team, maxMembers }: { team: Team; maxMembers: number }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-gray-100 p-3 rounded-full">
-              <User size={22} className="text-blue-800" />
+              <User size={22} className="text-blue-700" />
             </div>
-            <span className="text-lg text-blue-800">{team.memberCount} Members</span>
+            <span className="text-lg text-blue-700">{team.memberCount} Members</span>
           </div>
           
           {/* Member count indicator */}
@@ -161,7 +161,7 @@ function TeamCard({ team, maxMembers }: { team: Team; maxMembers: number }) {
         {/* Progress bar for member count */}
         <div className="mt-3 h-2 bg-gray-200 rounded-full overflow-hidden">
           <div 
-            className={`h-full ${isFull ? 'bg-red-500' : 'bg-green-500'}`} 
+            className={`h-full ${isFull ? 'bg-red-500' : 'bg-blue-700'}`} 
             style={{ width: `${(team.memberCount / maxMembers) * 100}%` }}
           ></div>
         </div>
@@ -174,14 +174,14 @@ function TeamCard({ team, maxMembers }: { team: Team; maxMembers: number }) {
               : 'bg-gray-100 hover:bg-gray-200 cursor-pointer'
             } transition-colors py-3 px-5 rounded-md`}>
             <div className="flex items-center gap-3">
-              <div className={`${isFull ? 'bg-gray-200' : 'bg-white'} p-1 rounded-full border ${isFull ? 'border-gray-400' : 'border-blue-800'}`}>
-                <Plus size={16} className={isFull ? 'text-gray-400' : 'text-blue-800'} />
+              <div className={`${isFull ? 'bg-gray-200' : 'bg-white'} p-1 rounded-full border ${isFull ? 'border-gray-400' : 'border-blue-700'}`}>
+                <Plus size={16} className={isFull ? 'text-gray-400' : 'text-blue-700'} />
               </div>
-              <span className={`font-medium ${isFull ? 'text-gray-400' : 'text-blue-800'}`}>
+              <span className={`font-medium ${isFull ? 'text-gray-400' : 'text-blue-700'}`}>
                 {isFull ? 'Team Full' : 'Add Members'}
               </span>
             </div>
-            {!isFull && <ChevronRight size={18} className="text-blue-800" />}
+            {!isFull && <ChevronRight size={18} className="text-blue-700" />}
           </div>
         </Link>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, X } from 'lucide-react';
+import { Button } from './ui/button';
 
 const FloatingChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
