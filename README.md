@@ -145,9 +145,11 @@ Access the chatbot via the "Spiriter" button.
 3. User can create more than one team.
 4. Admin operations require secure token-based access.
 5. Real-time updates apply to both admin and user views.
-6. Users cannot view player points before selection.
-7. The leaderboard highlights the logged-in user's position.
-8. AI chatbot cannot reveal player points under any circumstance.
+6. Users and Admin cannot view player points before and after selection.
+7. One player can represent multiple of number of teams from different team owners.
+8. One player can not represent multiple teams of same team owner.
+9. The leaderboard highlights the logged-in user's position.
+10. AI chatbot cannot reveal player points under any circumstance.
 
 ---
 
