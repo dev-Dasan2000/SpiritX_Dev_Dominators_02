@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 const AuthMethods = {
-    UserLogIn: async (username : string, password : string) => {
+    UserLogIn: async (username : string, password : string, rememberMe : boolean) => {
         try {
             const response = await fetch(`${process.env.BACKEND_URL}/auth/loginUser`,{
                 method: 'POST',
@@ -21,7 +21,7 @@ const AuthMethods = {
         }
     },
 
-    AdminLogIn: async (username : string, password : string) => {
+    AdminLogIn: async (username : string, password : string, rememberMe : boolean) => {
         try {
             const response = await fetch(`${process.env.BACKEND_URL}/auth/loginAdmin`,{
                 method: 'POST',

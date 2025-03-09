@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Loader2 from "@/components/Loader";
 import SuccessDialog from "@/components/SuccessDailog";
 
-import AuthMethods from './api/auth-methods';
+import AuthMethods from './../api/auth-methods';
 
 import {
   Form,
@@ -53,7 +53,7 @@ export default function LoginForm() {
   }, []);
 
   async function attemptAutoLogin(){
-    await AuthMethods.refreshToken().then((response:any)=>{
+    await AuthMethods.RefreshToken().then((response:any)=>{
       if(response.accessToken){
         setShowPopUp(true);
         return;
@@ -124,7 +124,7 @@ export default function LoginForm() {
     setAuthError("");
 
     try {
-      const response = await AuthMethods.Login(username, password, rememberMe);
+      const response = await AuthMethods.UserLogIn(username, password, rememberMe);
 
       if (response.success && response.accessToken) {
         setShowPopUp(true);
