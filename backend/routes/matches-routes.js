@@ -30,10 +30,10 @@ router.get('/:matchid', authenticateToken, async (req, res) => {
 // Create new match
 router.post('/', async (req, res) => {
     try {
-        const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points } = req.body;
+        const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded } = req.body;
         await pool.query(
-            'INSERT INTO matches (matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-            [matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points]
+            'INSERT INTO matches (matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
+            [matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded]
         );
         return res.status(201).json({ message: 'match created successfully' });
     } catch (error) {
@@ -44,10 +44,10 @@ router.post('/', async (req, res) => {
 // Update match
 router.put('/', authenticateToken, async (req, res) => {
     try {
-        const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points } = req.body;
+        const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded } = req.body;
         await pool.query(
-            'UPDATE matches SET totalruns = $3, wickets = $4, fifties = $5, centuries = $6, highscore = $7, points = $8 WHERE matchid = $1 && playerid = $2',
-            [matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points]
+            'UPDATE matches SET totalruns = $3, wickets = $4, fifties = $5, centuries = $6, highscore = $7, points = $8, ballsfaced = $9, innignsplayed = $10, oversbowled = $11, runsconceded = $12 WHERE matchid = $1 && playerid = $2',
+            [matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded]
         );
         res.json({ message: 'match updated successfully' });
     } catch (error) {

@@ -8,6 +8,13 @@ import { fileURLToPath } from 'url';
 import authRouter from './routes/auth-route.js';
 import userRouter from './routes/user-routes.js';
 import botRouter from './routes/bot-route.js';
+import adminRouter from './routes/admin-route.js';
+import eqRouter from './routes/eq-routes.js';
+import leaderBoardRouter from './routes/leaderboard-route.js';
+import matchesRouter from './routes/matches-route.js';
+import playerRouter from './routes/player-route.js';
+import teamsRouter from './routes/team-routes.js';
+
 
 
 dotenv.config();
@@ -29,5 +36,11 @@ app.use('/',express.static(join(__dirname, 'public')));
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/bot', botRouter);
+app.use('/admin', adminRouter);
+app.use('/eq', eqRouter);
+app.use('/leaderboard', leaderBoardRouter);
+app.use('/matches', matchesRouter);
+app.use('/players', playerRouter);
+app.use('/teams', teamsRouter);
 
 app.listen(PORT, ()=>console.log(`Server listening on ${PORT}`));
