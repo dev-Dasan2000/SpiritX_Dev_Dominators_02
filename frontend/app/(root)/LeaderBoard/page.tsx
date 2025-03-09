@@ -5,59 +5,101 @@ import React, { useState } from 'react';
 interface LeaderboardEntry {
   rank: number;
   username: string;
+  teamName: string;
   points: number;
-  isCurrentUser?: boolean;
+  userId: string;
 }
 
-const initialLeaderboard: LeaderboardEntry[] = [
-  { rank: 1, username: 'cricketchamp', points: 456 },
-  { rank: 2, username: 'fantasy_king', points: 442 },
-  { rank: 3, username: 'cricket_wizard', points: 435 },
-  { rank: 4, username: 'team_master', points: 421 },
-  { rank: 5, username: 'superplayer', points: 410 },
-  { rank: 6, username: 'cricket_pro', points: 398 },
-  { rank: 7, username: 'fantasy_guru', points: 392 },
-  { rank: 8, username: 'hitman', points: 385 },
-  { rank: 9, username: 'bowler_king', points: 378 },
-  { rank: 10, username: 'all_rounder', points: 370 },
-  { rank: 15, username: 'cricket_fan', points: 357, isCurrentUser: true },
+interface UserTeam {
+  teamId: string;
+  teamName: string;
+  rank: number;
+  points: number;
+}
+
+// Sample user and their multiple teams
+const currentUserId = "user123";
+const userTeams: UserTeam[] = [
+  { teamId: "team1", teamName: "Super Tigers", rank: 15, points: 357 },
+  { teamId: "team2", teamName: "Royal Challengers", rank: 23, points: 312 },
+  { teamId: "team3", teamName: "Mighty Warriors", rank: 8, points: 389 },
+];
+
+// Full leaderboard data including all teams
+const leaderboardData: LeaderboardEntry[] = [
+  { rank: 1, username: 'cricketchamp', teamName: 'Dream Team', points: 456, userId: 'user456' },
+  { rank: 2, username: 'fantasy_king', teamName: 'King\'s XI', points: 442, userId: 'user789' },
+  { rank: 3, username: 'cricket_wizard', teamName: 'Magic Strikers', points: 435, userId: 'user234' },
+  { rank: 4, username: 'team_master', teamName: 'Master Blasters', points: 421, userId: 'user567' },
+  { rank: 5, username: 'superplayer', teamName: 'Super Stars', points: 410, userId: 'user890' },
+  { rank: 6, username: 'cricket_pro', teamName: 'Pro Legends', points: 398, userId: 'user345' },
+  { rank: 7, username: 'fantasy_guru', teamName: 'Guru\'s Warriors', points: 392, userId: 'user678' },
+  { rank: 8, username: 'fantasy_fan', teamName: 'Mighty Warriors', points: 389, userId: currentUserId },
+  { rank: 9, username: 'bowler_king', teamName: 'Pace Attack', points: 378, userId: 'user901' },
+  { rank: 10, username: 'all_rounder', teamName: 'All Stars', points: 370, userId: 'user123' },
+  { rank: 15, username: 'fantasy_fan', teamName: 'Super Tigers', points: 357, userId: currentUserId },
+  { rank: 23, username: 'fantasy_fan', teamName: 'Royal Challengers', points: 312, userId: currentUserId },
+  { rank: 24, username: 'cric_lover', teamName: 'Chennai Kings', points: 305, userId: 'user432' },
+  { rank: 30, username: 'game_changer', teamName: 'Game Changers', points: 290, userId: 'user765' },
 ];
 
 const Leaderboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedTeamId, setSelectedTeamId] = useState<string>(userTeams[0].teamId);
+  
+  // Get the selected team
+  const selectedTeam = userTeams.find(team => team.teamId === selectedTeamId) || userTeams[0];
+  
+  // Get top score from the leaderboard - this doesn't change 
+  // when different team is selected
+  const topScore = leaderboardData[0].points;
 
-  // Filter and sort the leaderboard by rank
-  const filteredLeaderboard = initialLeaderboard
-    .filter((entry) => entry.username.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredLeaderboard = leaderboardData
+    .filter((entry) => 
+      entry.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      entry.teamName.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     .sort((a, b) => a.rank - b.rank);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="bg-gray-100 min-h-screen w-full">
+      <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Leaderboard</h1>
 
-        <div className="flex justify-between mb-8">
-          <div className="flex-1 bg-white rounded-xl shadow-md p-4 mx-2 text-center">
-            <p className="text-2xl font-bold">15</p>
-            <p className="text-gray-600">Your Rank</p>
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
+            <p className="text-3xl font-bold text-blue-500">{selectedTeam.rank}</p>
+            <p className="text-gray-600 font-medium mb-3">Team Rank</p>
+            <select 
+              value={selectedTeamId}
+              onChange={(e) => setSelectedTeamId(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none bg-white"
+            >
+              {userTeams.map(team => (
+                <option key={team.teamId} value={team.teamId}>
+                  {team.teamName}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="flex-1 bg-white rounded-xl shadow-md p-4 mx-2 text-center">
-            <p className="text-2xl font-bold">357</p>
-            <p className="text-gray-600">Your Points</p>
+          <div className="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition-shadow duration-300">
+            <p className="text-3xl font-bold text-blue-500">{selectedTeam.points}</p>
+            <p className="text-gray-600 font-medium">Team Points</p>
           </div>
-          <div className="flex-1 bg-white rounded-xl shadow-md p-4 mx-2 text-center">
-            <p className="text-2xl font-bold">456</p>
-            <p className="text-gray-600">Top Score</p>
+          <div className="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition-shadow duration-300">
+            <p className="text-3xl font-bold text-blue-500">{topScore}</p>
+            <p className="text-gray-600 font-medium">Top Score</p>
           </div>
         </div>
 
         <div className="relative mb-6">
           <input
             type="text"
-            placeholder="Search by username..."
+            placeholder="Search by username or team name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400 focus:outline-none"
+            className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none"
+            style={{ boxShadow: 'none' }}
           />
           <svg
             className="absolute left-3 top-3 text-gray-500"
@@ -69,27 +111,32 @@ const Leaderboard: React.FC = () => {
             stroke="currentColor"
           >
             <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16" y2="16" stroke="currentColor" strokeWidth="2" />
+            <line x1="21" y1="21" x2="16" y2="16" strokeWidth="2" />
           </svg>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="grid grid-cols-3 py-4 px-6 font-bold bg-gray-200">
+          <div className="grid grid-cols-4 py-4 px-6 font-bold bg-gray-200">
             <div>Rank</div>
             <div>Username</div>
+            <div>Team</div>
             <div className="text-right">Points</div>
           </div>
 
           {filteredLeaderboard.length > 0 ? (
             filteredLeaderboard.map((entry) => (
               <div
-                key={entry.rank}
-                className={`grid grid-cols-3 py-4 px-6 items-center border-b border-gray-200 ${
-                  entry.isCurrentUser ? 'bg-red-50 border-l-4 border-red-500' : ''
+                key={`${entry.userId}-${entry.teamName}`}
+                className={`grid grid-cols-4 py-4 px-6 items-center border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150 ${
+                  entry.userId === currentUserId && entry.teamName === selectedTeam.teamName 
+                    ? 'bg-blue-50 border-l-4 border-blue-500' 
+                    : entry.userId === currentUserId
+                    ? 'bg-blue-50/30 border-l-4 border-blue-300'
+                    : ''
                 }`}
               >
                 <div
-                  className={`font-bold ${
+                  className={`font-bold flex items-center ${
                     entry.rank === 1
                       ? 'text-yellow-500'
                       : entry.rank === 2
@@ -99,9 +146,17 @@ const Leaderboard: React.FC = () => {
                       : 'text-gray-600'
                   }`}
                 >
+                  {entry.rank === 1 && (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 2a1 1 0 00-.894.553L7.382 6H4a1 1 0 000 2h2.382l-1.724 3.447A1 1 0 004 12h12a1 1 0 00.894-1.447L15.618 8H18a1 1 0 100-2h-3.382l-1.724-3.447A1 1 0 0010 2z" clipRule="evenodd" />
+                    </svg>
+                  )}
                   {entry.rank}
                 </div>
                 <div className="font-medium">{entry.username}</div>
+                <div className={`font-medium ${entry.userId === currentUserId && entry.teamName === selectedTeam.teamName ? 'font-bold text-blue-500' : ''}`}>
+                  {entry.teamName}
+                </div>
                 <div className="text-right font-semibold">{entry.points}</div>
               </div>
             ))

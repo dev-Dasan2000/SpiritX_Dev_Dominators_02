@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get overall match statistics
-router.get('/', /*authenticateToken,*/ async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
     try {
         const result = await pool.query(`
             SELECT 
@@ -27,7 +27,7 @@ router.get('/', /*authenticateToken,*/ async (req, res) => {
 });
 
 // Get statistics for a specific match
-router.get('/:matchid/', /*authenticateToken,*/ async (req, res) => {
+router.get('/:matchid/', authenticateToken, async (req, res) => {
     try {
         const { matchid } = req.params;
 
@@ -53,34 +53,4 @@ router.get('/:matchid/', /*authenticateToken,*/ async (req, res) => {
     }
 });
 
-// Get all matches
-router.get('/', authenticateToken, async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM matches');
-        return res.json(result.rows);
-    } catch (err) {
-        return res.status(500).json({ error: err.message });
-    }
-});
-
-// Get specific match details
-router.get('/:matchid/:playerid', authenticateToken, async (req, res) => {
-    try {
-        const { matchid, playerid } = req.params;
-
-        const result = await pool.query(
-            'SELECT * FROM matches WHERE matchid = $1 AND playerid = $2', 
-            [matchid, playerid]
-        );
-
-        if (result.rows.length === 0) return res.status(404).json({ error: 'Match not found' });
-
-        return res.json(result.rows[0]);
-    } catch (err) {
-        return res.status(500).json({ error: err.message });
-    }
-});
-
 export default router;
-
-;
