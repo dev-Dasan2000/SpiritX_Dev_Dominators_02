@@ -3,6 +3,7 @@
 import { Inter } from 'next/font/google';
 import Navbar from '../components/Navbar';
 import '../globals.css';
+import AIChatbotButton from '../components/AiChatbotButton';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,8 +24,8 @@ export default function RootLayout({
             {children}
           </main>
           
-        
-          
+          {/* Floating Chatbot Button */}
+          <AIChatbotButton />
         </div>
       </body>
     </html>
