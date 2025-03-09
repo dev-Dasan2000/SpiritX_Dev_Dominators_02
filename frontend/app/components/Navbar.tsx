@@ -67,11 +67,11 @@ const Navbar = () => {
 
 const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const links = [
-    { href: '/selectTeam', icon: <Users size={18} />, label: 'Select Your Team' },
-    { href: '/ViewTeam', icon: <Layers size={18} />, label: 'Team' },
-    { href: '/budgetTracker', icon: <DollarSign size={18} />, label: 'Budget' },
-    { href: '/LeaderBoard', icon: <BarChart size={18} />, label: 'Leaderboard' },
-    { href: '/login', icon: <LogOut size={18} className='hidden sm:inline-block' />, label: 'Logout' }
+    { href: '/user/selectTeam', icon: <Users size={18} />, label: 'Select Your Team' },
+    { href: '/user/ViewTeam', icon: <Layers size={18} />, label: 'Team' },
+    { href: '/user/budgetTracker', icon: <DollarSign size={18} />, label: 'Budget' },
+    { href: '/user/LeaderBoard', icon: <BarChart size={18} />, label: 'Leaderboard' },
+    { href: '/user/login', icon: <LogOut size={18} className='hidden sm:inline-block' />, label: 'Logout' }
   ];
 
   return (
