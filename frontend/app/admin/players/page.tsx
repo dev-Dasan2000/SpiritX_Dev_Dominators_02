@@ -182,7 +182,7 @@ const Page = () => {
 
       {/* Modal for Adding/Editing Player */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-transparent  bg-opacity-50 backdrop-blur-md z-50 transition-opacity duration-300">
           <div className="bg-white p-6 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4 text-slate-700">{isEditing ? 'Edit Player' : 'Add New Player'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
