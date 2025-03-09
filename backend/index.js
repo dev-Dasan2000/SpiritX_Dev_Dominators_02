@@ -8,11 +8,11 @@ import { fileURLToPath } from 'url';
 import authRouter from './routes/auth-route.js';
 import userRouter from './routes/user-routes.js';
 import botRouter from './routes/bot-route.js';
-import adminRouter from './routes/admin-route.js';
+import adminRouter from './routes/admin-routes.js';
 import eqRouter from './routes/eq-routes.js';
-import leaderBoardRouter from './routes/leaderboard-route.js';
-import matchesRouter from './routes/matches-route.js';
-import playerRouter from './routes/player-route.js';
+import leaderBoardRouter from './routes/leaderboard-routes.js';
+import matchesRouter from './routes/matches-routes.js';
+import playerRouter from './routes/player-routes.js';
 import teamsRouter from './routes/team-routes.js';
 
 
