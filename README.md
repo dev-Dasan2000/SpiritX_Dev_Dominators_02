@@ -140,14 +140,18 @@ Access the chatbot via the "Spiriter" button.
 ---
 
 ## Assumptions
-1. Users can only select players from the provided dataset.
-2. Team selection must stay within the Rs.9,000,000 budget.
-3. User can create more than one team.
-4. Admin operations require secure token-based access.
-5. Real-time updates apply to both admin and user views.
-6. Users cannot view player points before selection.
-7. The leaderboard highlights the logged-in user's position.
-8. AI chatbot cannot reveal player points under any circumstance.
+1. Users and Admin have seperate login.
+2. for security purpose admin only has the sign in purpose.
+3. Users can only select players from the provided dataset.
+4. Team selection must stay within the Rs.9,000,000 budget.
+5. User can create more than one team.
+6. Admin operations require secure token-based access.
+7. Real-time updates apply to both admin and user views.
+8. Users and Admin cannot view player points before and after selection.
+9. One player can represent multiple of number of teams from different team owners.
+10. One player can not represent multiple teams of same team owner.
+11. The leaderboard highlights the logged-in user's position.
+12. AI chatbot cannot reveal player points under any circumstance.
 
 ---
 
