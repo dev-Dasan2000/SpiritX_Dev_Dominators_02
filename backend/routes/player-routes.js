@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authentication.js';
 const router = express.Router();
 
 // Get all players
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM players');
         return res.json(result.rows);
@@ -15,7 +15,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // Get specific player
-router.get('/:playername', authenticateToken, async (req, res) => {
+router.get('/:playername', /*authenticateToken,*/ async (req, res) => {
     try {
         const { playerid } = req.params;
         const result = await pool.query('SELECT * FROM players WHERE playerid = $1', [playerid]);
@@ -27,7 +27,7 @@ router.get('/:playername', authenticateToken, async (req, res) => {
 });
 
 // Create new player
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { playerid, playername, speciality, price, university} = req.body;
         await pool.query(
@@ -41,7 +41,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // Update player
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/', /*authenticateToken,*/ async (req, res) => {
     try {
         const { playerid, playername, speciality, price, university } = req.body;
         await pool.query(
@@ -55,7 +55,7 @@ router.put('/', authenticateToken, async (req, res) => {
 });
 
 // Delete player
-router.delete('/:playerid', authenticateToken, async (req, res) => {
+router.delete('/:playerid', /*authenticateToken,*/ async (req, res) => {
     try {
         const { playerid } = req.params;
         await pool.query('DELETE FROM players WHERE playerid = $1', [playerid]);

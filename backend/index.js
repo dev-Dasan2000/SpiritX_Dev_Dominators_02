@@ -15,6 +15,7 @@ import matchesRouter from './routes/matches-routes.js';
 import playerRouter from './routes/player-routes.js';
 import teamsRouter from './routes/team-routes.js';
 import tournamentRouter from './routes/tournament-route.js';
+import playerscrRouter from './routes/playerxscr-route.js';
 
 
 dotenv.config();
@@ -43,5 +44,6 @@ app.use('/matches', matchesRouter);
 app.use('/players', playerRouter);
 app.use('/teams', teamsRouter);
 app.use('/tournament', tournamentRouter);
+app.use('/scr', playerscrRouter);
 
 app.listen(PORT, ()=>console.log(`Server listening on ${PORT}`));

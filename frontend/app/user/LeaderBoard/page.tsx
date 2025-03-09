@@ -24,7 +24,14 @@ const userTeams: UserTeam[] = [
   { teamId: "team2", teamName: "Royal Challengers", rank: 23, points: 312 },
   { teamId: "team3", teamName: "Mighty Warriors", rank: 8, points: 389 },
 ];
-
+/*const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/teams`, {
+  method: 'GET',
+  headers: {
+    credentials: 'include',
+    'Content-Type': 'application/json',
+  }
+});
+const userTeams: UserTeam[] = await response.json();*/
 // Full leaderboard data including all teams
 const leaderboardData: LeaderboardEntry[] = [
   { rank: 1, username: 'cricketchamp', teamName: 'Dream Team', points: 456, userId: 'user456' },
