@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 
 import authRouter from './routes/auth-route.js';
 import userRouter from './routes/user-routes.js';
+import botRouter from './routes/bot-route.js';
 
 
 dotenv.config();
@@ -27,5 +28,6 @@ app.use('/',express.static(join(__dirname, 'public')));
 /* Define routes */ 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
+app.use('/bot', botRouter);
 
 app.listen(PORT, ()=>console.log(`Server listening on ${PORT}`));
