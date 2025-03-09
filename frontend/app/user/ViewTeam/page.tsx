@@ -22,10 +22,23 @@ export default function TeamManagement() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     fetchTeams();
+    attemptAutoLogin();
   }, []);
+  
+  async function attemptAutoLogin() {
+    await AuthMethods.RefreshToken().then((response: any) => {
+      console.log(response);
+      if (!response.accessToken) {
+        window.alert("Session expired. Please log in again.");
+        window.location.href = "/";
+      }
+      setUsername(response.username);
+    });
+  }
 
   async function fetchTeams() {
     try {
@@ -55,14 +68,21 @@ export default function TeamManagement() {
   }
   
 
-  const handleCreateTeam = () => {
+  const handleCreateTeam = async () => {
     if (newTeamName.trim()) {
+      const createdTeam = {teamname: newTeamName, username: username,memid_1: null,memid_2: null,memid_3: null,memid_4: null,memid_5: null,memid_6: null,memid_7: null,
+        memid_8: null,
+        memid_9: null,
+        memid_10: null,
+        memid_11: null
+      }
+      await TeamMethods.CreateTeam(createdTeam);
       const newTeam: Team = {
         id: Date.now().toString(),
         name: newTeamName,
         memberCount: 0,
         color: 'bg-blue-700',
-        owner: '', // Assuming owner will be set later
+        owner: '',
       };
 
       setTeams([...teams, newTeam]);

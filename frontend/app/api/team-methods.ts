@@ -31,10 +31,29 @@ const TeamMethods = {
     },
 
     // Get a specific team by name
-    GetTeam: async (teamname: string) => {
+    GetTeam: async (teamname: string, username: string) => {
         try {
             const accessToken = await getAccessToken();
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/${teamname}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({ username }),
+            });
+
+            if (!response.ok) throw new Error('Failed to get team');
+            return await response.json();
+        } catch (error: any) {
+            return { error: error.message };
+        }
+    },
+
+    GetUsersTeam: async (username: string) => {
+        try {
+            const accessToken = await getAccessToken();
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teams/getUsersTeams/${username}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
