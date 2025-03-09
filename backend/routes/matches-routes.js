@@ -28,7 +28,7 @@ router.get('/:matchid', authenticateToken, async (req, res) => {
 });
 
 // Create new match
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     try {
         const { matchid, playerid, totalruns, wickets, fifties, centuries, highscore, points, ballsfaced, innignsplayed, oversbowled, runsconceded } = req.body;
         await pool.query(
