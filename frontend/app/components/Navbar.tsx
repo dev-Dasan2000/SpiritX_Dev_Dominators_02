@@ -12,7 +12,7 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-[#2D5D85] to-[#4A90E2] text-white p-3">
       <div className="flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 md:gap-3">
           <div className="bg-white text-[#2D5D85] font-bold px-3 py-2 rounded-lg">FC</div>
           <span className="text-lg font-semibold">Fantasy Cricket</span>
         </div>
@@ -51,6 +51,7 @@ const Navbar = () => {
 
               {/* Logout Button at the Bottom */}
               <button
+              id='Logout'
                 className="flex items-center gap-2 bg-[#2D5D85] text-white px-4 py-2 rounded-lg hover:bg-[#4A90E2] transition-colors mt-auto"
                 onClick={() => setIsOpen(false)}
               >
@@ -70,6 +71,7 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
     { href: '/ViewTeam', icon: <Layers size={18} />, label: 'Team' },
     { href: '/budgetTracker', icon: <DollarSign size={18} />, label: 'Budget' },
     { href: '/LeaderBoard', icon: <BarChart size={18} />, label: 'Leaderboard' },
+    { href: '/login', icon: <LogOut size={18} className='hidden sm:inline-block' />, label: 'Logout' }
   ];
 
   return (
@@ -78,7 +80,9 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
         <Link
           key={label}
           href={href}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#A0C9E6] hover:text-[#2D5D85] transition-colors"
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#A0C9E6] hover:text-[#2D5D85] transition-colors ${
+            label === 'Logout' ? 'hidden sm:inline-block ' : ''
+          }`}
           onClick={() => setIsOpen(false)}
         >
           {icon} {label}
@@ -87,5 +91,6 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
     </>
   );
 };
+
 
 export default Navbar;
