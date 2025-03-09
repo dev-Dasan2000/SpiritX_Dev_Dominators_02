@@ -94,7 +94,7 @@ export default function ViewTeam() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
           {players.map((player) => (
-            <div key={player.id} className="bg-blue-700 rounded-lg shadow-md p-4 text-white">
+            <div key={player.id} className="bg-blue-600 rounded-lg shadow-md p-4 text-white">
               <div className="font-semibold text-xl mb-2">{player.name}</div>
               <div className="text-yellow-300 mb-4">{player.position}</div>
               <button
@@ -113,8 +113,8 @@ export default function ViewTeam() {
             <div key={index} className="bg-white rounded-lg shadow-md flex flex-col items-center justify-center h-40 border border-gray-200">
               <div className="text-gray-500 text-sm mb-2">No player assigned</div>
               <div className="bg-yellow-400 text-black rounded-full w-10 h-10 flex items-center justify-center">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                <svg className="w-6 h-6" fill="none" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
             </div>
