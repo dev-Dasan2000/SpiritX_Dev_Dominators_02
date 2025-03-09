@@ -70,7 +70,7 @@ const BudgetTracking: React.FC = () => {
         <div className="bg-white rounded-xl shadow-lg p-6 border-l-8 border-blue-300">
           <div className="flex justify-between items-center mb-4 border-b-2 border-blue-200 pb-4">
             <h2 className="text-xl font-semibold">Player Cost Breakdown</h2>
-            <button className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+            <button className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition cursor-pointer">
               Back to Team
             </button>
           </div>
