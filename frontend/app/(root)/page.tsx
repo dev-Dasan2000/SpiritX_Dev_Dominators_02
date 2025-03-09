@@ -54,6 +54,7 @@ export default function LoginForm() {
 
   async function attemptAutoLogin(){
     await AuthMethods.RefreshToken().then((response:any)=>{
+      console.log(response);
       if(response.accessToken){
         setShowPopUp(true);
         return;
@@ -125,8 +126,8 @@ export default function LoginForm() {
 
     try {
       const response = await AuthMethods.UserLogIn(username, password, rememberMe);
-
-      if (response.success && response.accessToken) {
+      console.log(response);
+      if (response.successful && response.accessToken) {
         setShowPopUp(true);
       } else {
         if(response.error){
@@ -257,7 +258,7 @@ export default function LoginForm() {
           </p>
         </CardContent>
       </Card>
-      {showPopUp && <SuccessDialog iconType="success" message="Success" subMessage="You have successfully logged in" showProgressBar={true} redirect="/home"/>}
+      {showPopUp && <SuccessDialog iconType="success" message="Success" subMessage="You have successfully logged in" showProgressBar={true} redirect="/user"/>}
     </div>
   );
 }

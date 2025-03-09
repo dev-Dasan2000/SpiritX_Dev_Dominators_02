@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { User, Plus, ChevronRight, AlertCircle } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
+import AuthMethods from '@/app/api/auth-methods';
 
 interface Team {
   id: string;
@@ -24,6 +25,20 @@ export default function TeamManagement() {
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
+
+  useEffect(() => {
+    attemptAutoLogin();
+  }, []);
+  
+  async function attemptAutoLogin(){
+    await AuthMethods.RefreshToken().then((response:any)=>{
+      console.log(response);
+      if(!response.accessToken){
+        window.alert("Session expired. Please log in again.");
+        window.location.href="/"
+      }
+    });
+  }
   
 
   

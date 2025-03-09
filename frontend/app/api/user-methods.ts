@@ -60,8 +60,15 @@ const UserMethods = {
                 body: JSON.stringify({ username, password }),
             });
 
-            if (!response.ok) throw new Error('Failed to create user');
-            return await response.json();
+            if (!response.ok){ 
+                const errorMessage = await response.text();
+                if (errorMessage.includes("duplicate key value ")) {
+                    throw new Error('User already exists');
+                }
+                throw new Error('Failed to create user');
+            }
+            const data = await response.json();
+            return data;
         } catch (error: any) {
             return { error: error.message };
         }

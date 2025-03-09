@@ -69,7 +69,7 @@ const AuthMethods = {
     // User logout method
     UserLogOut: async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh_token`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {

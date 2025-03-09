@@ -102,8 +102,8 @@ export default function SignupForm() {
       if (passwordStrength === "Strong password" || passwordStrength === "Moderate password") {
         try {
           setLoading(true);
-          const retrievedData = await UserMethods.CreateUser( formData.username, formData.password);
-          if (retrievedData.success) {
+          const retrievedData = await UserMethods.CreateUser(formData.username, formData.password);
+          if (retrievedData.message == "User created successfully") {
             setOpenPopup(true);
           }
           else if (retrievedData.error) {
@@ -148,17 +148,17 @@ export default function SignupForm() {
                     </FormControl>
 
                     <div className="items-center">
-                    {/* Username availability feedback */}
-                    <div className={`transition-all duration-1000 overflow-hidden max-h-0 ${isAvailable !== null ? 'max-h-40' : ''}`}>
-                      {isAvailable !== null && (
-                        <FormDescription
-                          className={`text-sm ${isAvailable ? "text-green-400" : "text-red-400"}`}
-                        >
-                          {isAvailable ? "Username is valid" : "Username is invalid - must be at least 8 characters long"}
-                        </FormDescription>
-                      )}
+                      {/* Username availability feedback */}
+                      <div className={`transition-all duration-1000 overflow-hidden max-h-0 ${isAvailable !== null ? 'max-h-40' : ''}`}>
+                        {isAvailable !== null && (
+                          <FormDescription
+                            className={`text-sm ${isAvailable ? "text-green-400" : "text-red-400"}`}
+                          >
+                            {isAvailable ? "Username is valid" : "Username is invalid - must be at least 8 characters long"}
+                          </FormDescription>
+                        )}
+                      </div>
                     </div>
-                  </div>
                     <FormMessage className="text-red-400" />
                   </FormItem>
                 )}
@@ -183,15 +183,15 @@ export default function SignupForm() {
                       />
                     </FormControl>
                     <div className="items-center">
-                    {/* Password strength feedback */}
-                    <div className={`transition-all duration-1000 overflow-hidden max-h-0 ${passwordStrength ? 'max-h-40' : ''}`}>
-                      {passwordStrength && (
-                        <FormDescription className="text-sm text-green-400">
-                          {passwordStrength}
-                        </FormDescription>
-                      )}
+                      {/* Password strength feedback */}
+                      <div className={`transition-all duration-1000 overflow-hidden max-h-0 ${passwordStrength ? 'max-h-40' : ''}`}>
+                        {passwordStrength && (
+                          <FormDescription className="text-sm text-green-400">
+                            {passwordStrength}
+                          </FormDescription>
+                        )}
+                      </div>
                     </div>
-                  </div>
                     <div className="h-1 mt-2 bg-gray-500">
                       <div
                         className="h-full"
@@ -199,15 +199,15 @@ export default function SignupForm() {
                           width: `${passwordStrength === "Weak password"
                             ? 30
                             : passwordStrength === "moderate password"
-                            ? 70
-                            : passwordStrength === "Strong password"
-                            ? 100
-                            : 0}%`,
+                              ? 70
+                              : passwordStrength === "Strong password"
+                                ? 100
+                                : 0}%`,
                           backgroundColor: passwordStrength === "Strong password"
                             ? 'green'
                             : passwordStrength === "Moderate password"
-                            ? 'yellow'
-                            : 'red',
+                              ? 'yellow'
+                              : 'red',
                         }}
                       ></div>
                     </div>
@@ -235,17 +235,17 @@ export default function SignupForm() {
                       />
                     </FormControl>
                     <div className="items-center">
-                    {/* Confirm Password match feedback */}
-                    <div className={`transition-all duration-1000 overflow-hidden max-h-0 ${passwordMatch !== null ? 'max-h-40' : ''}`}>
-                      {passwordMatch !== null && (
-                        <FormDescription
-                          className={`text-sm ${passwordMatch ? "text-green-400" : "text-red-400"}`}
-                        >
-                          {passwordMatch ? "Passwords match" : "Passwords do not match"}
-                        </FormDescription>
-                      )}
+                      {/* Confirm Password match feedback */}
+                      <div className={`transition-all duration-1000 overflow-hidden max-h-0 ${passwordMatch !== null ? 'max-h-40' : ''}`}>
+                        {passwordMatch !== null && (
+                          <FormDescription
+                            className={`text-sm ${passwordMatch ? "text-green-400" : "text-red-400"}`}
+                          >
+                            {passwordMatch ? "Passwords match" : "Passwords do not match"}
+                          </FormDescription>
+                        )}
+                      </div>
                     </div>
-                  </div>
                     <FormMessage className="text-red-400" />
                   </FormItem>
                 )}

@@ -3,10 +3,20 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Users, Layers, DollarSign, BarChart, MessageSquare, LogOut, Menu, X } from 'lucide-react';
-import { Button } from './ui/button';
+import AuthMethods from '../api/auth-methods';
+import Loader2 from '@/components/Loader';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const handleLogout = async () =>{
+    setLoading(true);
+    await AuthMethods.UserLogOut().then(()=>{
+      window.location.href="/";
+    })
+  }
+
 
   return (
     <nav className="bg-gradient-to-r from-[#2D5D85] to-[#4A90E2] text-white p-3">
@@ -51,11 +61,12 @@ const Navbar = () => {
 
               {/* Logout Button at the Bottom */}
               <button
+              onClick={handleLogout}
+              disabled={isLoading}
               id='Logout'
                 className="flex items-center gap-2 bg-[#2D5D85] text-white px-4 py-2 rounded-lg hover:bg-[#4A90E2] transition-colors mt-auto"
-                onClick={() => setIsOpen(false)}
               >
-                <LogOut size={18} /> Logout
+                {isLoading? <Loader2 /> : <LogOut size={33} />}Logout
               </button>
             </div>
           </div>
