@@ -6,11 +6,47 @@ import { jwTokens } from '../utils/jwt-helper.js';
 
 const router = express.Router();
 
-router.post('/login', async (req, res) => {
+router.post('/loginUser', async (req, res) => {
     try {
         const { username, password, rememberMe } = req.body;
         console.log(rememberMe);
         const user = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+
+        if (user.rows.length === 0) {
+            return res.json({ successful: false });
+        }
+
+        const validPassword = await bcrypt.compare(password, user.rows[0].password);
+        if (!validPassword) {
+            return res.json({ successful: false });
+        }
+
+        let tokens = jwTokens(user.rows[0].username);
+
+        const cookieOptions = {
+            httpOnly: true,
+            sameSite: "None",
+            secure: true,
+        };
+
+        if (rememberMe) {
+            cookieOptions.maxAge = 14 * 24 * 60 * 60 * 1000;
+        }
+
+        res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
+        return res.json({ successful: true, accessToken: tokens.accessToken });
+
+    } catch (err) {
+        console.error("Login error:", err.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+router.post('/loginAdmin', async (req, res) => {
+    try {
+        const { username, password, rememberMe } = req.body;
+        console.log(rememberMe);
+        const user = await pool.query('SELECT * FROM admins WHERE username = $1', [username]);
 
         if (user.rows.length === 0) {
             return res.json({ successful: false });
