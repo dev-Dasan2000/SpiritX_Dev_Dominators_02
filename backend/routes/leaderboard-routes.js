@@ -7,12 +7,13 @@ const router = express.Router();
 // Get all leaderboards
 router.get('/', authenticateToken, async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM leaderboards');
+        const result = await pool.query('SELECT * FROM leaderboard ORDER BY total_points ASC');
         return res.json(result.rows);
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }
 });
+
 
 // Get specific leaderboard
 router.get('/:teamname', authenticateToken, async (req, res) => {
@@ -32,7 +33,7 @@ router.post('/', authenticateToken, async (req, res) => {
     try {
         const { teamname, totalpoints, username } = req.body;
         await pool.query(
-            'INSERT INTO leaderboards (teamname, totalpoints, owner) VALUES ($1, $2, $3)',
+            'INSERT INTO leaderboards (teamname, total_points, owner) VALUES ($1, $2, $3)',
             [teamname, totalpoints, username]
         );
         return res.status(201).json({ message: 'leaderboard created successfully' });
@@ -46,7 +47,7 @@ router.put('/', authenticateToken, async (req, res) => {
     try {
         const { teamname, totalpoints, username } = req.body;
         await pool.query(
-            'UPDATE leaderboards SET totalpoints = $2 WHERE teamname = $1 && owner = $3',
+            'UPDATE leaderboards SET total_points = $2 WHERE teamname = $1 && owner = $3',
             [teamname, totalpoints, username]
         );
         res.json({ message: 'leaderboard updated successfully' });

@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import AuthMethods from '@/app/api/auth-methods';
+import LeaderBoardMethods from '@/app/api/leaderboardMethods';
 
 interface LeaderboardEntry {
   rank: number;
@@ -19,47 +21,78 @@ interface UserTeam {
 
 // Sample user and their multiple teams
 const currentUserId = "user123";
-const userTeams: UserTeam[] = [
-  { teamId: "team1", teamName: "Super Tigers", rank: 15, points: 357 },
-  { teamId: "team2", teamName: "Royal Challengers", rank: 23, points: 312 },
-  { teamId: "team3", teamName: "Mighty Warriors", rank: 8, points: 389 },
-];
-
-// Full leaderboard data including all teams
-const leaderboardData: LeaderboardEntry[] = [
-  { rank: 1, username: 'cricketchamp', teamName: 'Dream Team', points: 456, userId: 'user456' },
-  { rank: 2, username: 'fantasy_king', teamName: 'King\'s XI', points: 442, userId: 'user789' },
-  { rank: 3, username: 'cricket_wizard', teamName: 'Magic Strikers', points: 435, userId: 'user234' },
-  { rank: 4, username: 'team_master', teamName: 'Master Blasters', points: 421, userId: 'user567' },
-  { rank: 5, username: 'superplayer', teamName: 'Super Stars', points: 410, userId: 'user890' },
-  { rank: 6, username: 'cricket_pro', teamName: 'Pro Legends', points: 398, userId: 'user345' },
-  { rank: 7, username: 'fantasy_guru', teamName: 'Guru\'s Warriors', points: 392, userId: 'user678' },
-  { rank: 8, username: 'fantasy_fan', teamName: 'Mighty Warriors', points: 389, userId: currentUserId },
-  { rank: 9, username: 'bowler_king', teamName: 'Pace Attack', points: 378, userId: 'user901' },
-  { rank: 10, username: 'all_rounder', teamName: 'All Stars', points: 370, userId: 'user123' },
-  { rank: 15, username: 'fantasy_fan', teamName: 'Super Tigers', points: 357, userId: currentUserId },
-  { rank: 23, username: 'fantasy_fan', teamName: 'Royal Challengers', points: 312, userId: currentUserId },
-  { rank: 24, username: 'cric_lover', teamName: 'Chennai Kings', points: 305, userId: 'user432' },
-  { rank: 30, username: 'game_changer', teamName: 'Game Changers', points: 290, userId: 'user765' },
-];
 
 const Leaderboard: React.FC = () => {
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [userTeams, setUserTeams] = useState<UserTeam[]>([]);
+  const [selectedTeamId, setSelectedTeamId] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedTeamId, setSelectedTeamId] = useState<string>(userTeams[0].teamId);
-  
+
+  useEffect(() => {
+    attemptAutoLogin();
+    getAllLeaderBoards();
+  }, []);
+
+  // Mapping the data into the format expected by your leaderboard
+  useEffect(() => {
+    const teams = leaderboard.map((team, index) => ({
+      teamId: team.userId,
+      teamName: team.teamName,
+      rank: index + 1,
+      points: team.points
+    }));
+    
+    setUserTeams(teams); // Set userTeams
+
+    // Set selectedTeamId to the first team's ID after userTeams is populated
+    if (teams.length > 0) {
+      setSelectedTeamId(teams[0].teamId);
+    }
+  }, [leaderboard]);
+
+  async function getAllLeaderBoards() {
+    const leaderboards = await LeaderBoardMethods.GetAllLeaderBoards();
+
+    // Mapping the data into the format expected by your leaderboard
+    const formattedLeaderboard = leaderboards.map((entry: any, index: any) => ({
+      rank: index + 1, // Rank based on the position in the array
+      username: entry.owner, // Assuming 'owner' is the username
+      teamName: entry.teamname, // 'teamname' from the backend
+      points: entry.total_points, // 'total_points' from the backend
+      userId: `${entry.owner}-${entry.teamname}`, // Unique userId (combining owner and teamname)
+    }));
+
+    // Sort the leaderboard by points in descending order
+    formattedLeaderboard.sort((a:any, b:any) => b.points - a.points); // Sorting in descending order
+
+    setLeaderboard(formattedLeaderboard); // Update state with formatted leaderboard data
+  }
+
+  async function attemptAutoLogin() {
+    await AuthMethods.RefreshToken().then((response: any) => {
+      console.log(response);
+      if (!response.accessToken) {
+        window.alert("Session expired. Please log in again.");
+        window.location.href = "/";
+      }
+    });
+  }
+
   // Get the selected team
   const selectedTeam = userTeams.find(team => team.teamId === selectedTeamId) || userTeams[0];
   
-  // Get top score from the leaderboard - this doesn't change 
-  // when different team is selected
-  const topScore = leaderboardData[0].points;
+  // Safely get the top score from the leaderboard - if leaderboard is empty, return 0
+  const topScore = leaderboard.length > 0 ? leaderboard[0].points : 0;
 
-  const filteredLeaderboard = leaderboardData
+  const filteredLeaderboard = leaderboard
     .filter((entry) => 
       entry.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
       entry.teamName.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .sort((a, b) => a.rank - b.rank);
+    .map((entry, index) => ({
+      ...entry,
+      rank: index + 1, // Recalculate rank after filtering
+    })) // Recalculate rank dynamically after filtering
 
   return (
     <div className="bg-gray-100 min-h-screen w-full">
@@ -68,7 +101,7 @@ const Leaderboard: React.FC = () => {
 
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow duration-300">
-            <p className="text-3xl font-bold text-blue-500">{selectedTeam.rank}</p>
+            <p className="text-3xl font-bold text-blue-500">{selectedTeam?.rank || 'N/A'}</p>
             <p className="text-gray-600 font-medium mb-3">Team Rank</p>
             <select 
               value={selectedTeamId}
@@ -83,7 +116,7 @@ const Leaderboard: React.FC = () => {
             </select>
           </div>
           <div className="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition-shadow duration-300">
-            <p className="text-3xl font-bold text-blue-500">{selectedTeam.points}</p>
+            <p className="text-3xl font-bold text-blue-500">{selectedTeam?.points || 'N/A'}</p>
             <p className="text-gray-600 font-medium">Team Points</p>
           </div>
           <div className="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-lg transition-shadow duration-300">

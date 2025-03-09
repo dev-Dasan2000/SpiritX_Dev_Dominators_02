@@ -10,10 +10,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
-  const handleLogout = async () =>{
+  const handleLogout = async () => {
     setLoading(true);
-    await AuthMethods.UserLogOut().then(()=>{
-      window.location.href="/";
+    await AuthMethods.UserLogOut().then(() => {
+      window.location.href = "/";
     })
   }
 
@@ -49,7 +49,7 @@ const Navbar = () => {
             className="fixed top-16 inset-x-0 bottom-0 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setIsOpen(false)}
           />
-      
+
 
           {/* Mobile Menu */}
           <div className="fixed top-16 right-0 w-64 h-[calc(100vh-4rem)] bg-white text-[#2D5D85] z-50 md:hidden transform transition-transform duration-300 ease-in-out">
@@ -62,12 +62,12 @@ const Navbar = () => {
 
               {/* Logout Button at the Bottom */}
               <button
-              onClick={handleLogout}
-              disabled={isLoading}
-              id='Logout'
+                onClick={handleLogout}
+                disabled={isLoading}
+                id='Logout'
                 className="flex items-center gap-2 bg-[#2D5D85] text-white px-4 py-2 rounded-lg hover:bg-[#4A90E2] transition-colors mt-auto"
               >
-                {isLoading? <Loader2 /> : <LogOut size={33} />}Logout
+                {isLoading ? <Loader2 /> : <LogOut size={33} />}Logout
               </button>
             </div>
           </div>
@@ -83,8 +83,17 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
     { href: '/user/ViewTeam', icon: <Layers size={18} />, label: 'Team' },
     { href: '/user/budgetTracker', icon: <DollarSign size={18} />, label: 'Budget' },
     { href: '/user/LeaderBoard', icon: <BarChart size={18} />, label: 'Leaderboard' },
-    
+
   ];
+
+  const [isLoading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    setLoading(true);
+    await AuthMethods.UserLogOut().then(() => {
+      window.location.href = "/";
+    })
+  }
 
   return (
     <>
@@ -92,27 +101,27 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
         <Link
           key={label}
           href={href}
-          className={`flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#A0C9E6] hover:text-[#2D5D85] transition-colors ${
-            label === 'Logout' ? 'hidden sm:inline-block ' : ''
-          }`}
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#A0C9E6] hover:text-[#2D5D85] transition-colors ${label === 'Logout' ? 'hidden sm:inline-block ' : ''
+            }`}
           onClick={() => setIsOpen(false)}
         >
           {icon} {label}
         </Link>
-        
+
       )
-      
+
       )}
-       <button
-  id="Logout1"
-  className="hidden md:flex items-center gap-2 bg-[#2D5D85] text-white px-4 py-2 rounded-lg hover:bg-[#4A90E2] transition-colors mt-auto"
-  onClick={() => setIsOpen(false)}
->
-  <LogOut size={18} /> Logout
-</button>
+      <button
+      disabled={isLoading}
+        id="Logout1"
+        className="hidden md:flex items-center gap-2 bg-transparent cursor-pointer hover:bg-[#A0C9E6] hover:text-[#2D5D85] text-white px-4 py-2 rounded-lg transition-colors mt-auto"
+        onClick={handleLogout}
+      >
+        <LogOut size={18} />{isLoading? <Loader2 /> : "Logout"}
+      </button>
 
     </>
-    
+
   );
 };
 

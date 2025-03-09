@@ -13,7 +13,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // Chatbot API Route
 router.post('/', authenticateToken, async (req, res) => {
     try {
-        const { userQuery } = req.body;
+        const userQuery  = req.body.message;
+        console.log("User query:", userQuery);
 
         // First, try an exact match on player name
         let playerQuery = `

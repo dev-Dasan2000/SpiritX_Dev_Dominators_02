@@ -1,7 +1,8 @@
 'use client';
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/app/components/ui/button";
+import AuthMethods from "../../api/auth-methods";
 
 interface Player {
   name: string;
@@ -16,6 +17,21 @@ interface TeamBudget {
 }
 
 const BudgetTracking: React.FC = () => {
+
+  useEffect(() => {
+    attemptAutoLogin();
+  }, []);
+  
+  async function attemptAutoLogin(){
+    await AuthMethods.RefreshToken().then((response:any)=>{
+      console.log(response);
+      if(!response.accessToken){
+        window.alert("Session expired. Please log in again.");
+        window.location.href="/"
+      }
+    });
+  }
+
   const totalBudget: number = 4000000;
   const spentAmount: number = 1470000;
   const remainingBudget: number = totalBudget - spentAmount;

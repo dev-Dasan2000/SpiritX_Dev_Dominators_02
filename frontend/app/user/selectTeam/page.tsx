@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Button } from '@/app/components/ui/button';
+import AuthMethods from '@/app/api/auth-methods';
 
 export default function Home() {
   // Teams state to manage multiple teams
@@ -68,6 +69,20 @@ export default function Home() {
     // Clean up event listener
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
+
+  useEffect(() => {
+    attemptAutoLogin();
+  }, []);
+  
+  async function attemptAutoLogin(){
+    await AuthMethods.RefreshToken().then((response:any)=>{
+      console.log(response);
+      if(!response.accessToken){
+        window.alert("Session expired. Please log in again.");
+        window.location.href="/"
+      }
+    });
+  }
 
   const players = [
     {

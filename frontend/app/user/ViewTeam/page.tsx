@@ -5,43 +5,56 @@ import Link from 'next/link';
 import { User, Plus, ChevronRight, AlertCircle } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import AuthMethods from '@/app/api/auth-methods';
+import TeamMethods from '@/app/api/team-methods';
 
 interface Team {
   id: string;
   name: string;
+  owner: string; // assuming owner is part of the data
   memberCount: number;
   color: string;
 }
 
-// Maximum team members constant
 const MAX_TEAM_MEMBERS = 11;
 
 export default function TeamManagement() {
-  const [teams, setTeams] = useState<Team[]>([
-    { id: '1', name: 'Dream Team', memberCount: 11, color: 'bg-blue-700' },
-    { id: '2', name: 'Alpha Squad', memberCount: 8, color: 'bg-blue-700' },
-    { id: '3', name: 'Tech Titans', memberCount: 5, color: 'bg-blue-700' },
-  ]);
-
+  const [teams, setTeams] = useState<Team[]>([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    attemptAutoLogin();
+    fetchTeams();
   }, []);
+
+  async function fetchTeams() {
+    try {
+      const data = await TeamMethods.GetAllTeams();
+      
+      // Transform the data into the format your component expects
+      const transformedTeams = data.map((team: any) => {
+        // Count the number of non-null `memid_X` values for memberCount
+        const memberCount = Object.keys(team)
+          .filter(key => key.startsWith('memid_') && team[key] !== null)
+          .length;
   
-  async function attemptAutoLogin(){
-    await AuthMethods.RefreshToken().then((response:any)=>{
-      console.log(response);
-      if(!response.accessToken){
-        window.alert("Session expired. Please log in again.");
-        window.location.href="/"
-      }
-    });
+        return {
+          id: team.teamname, // Or generate an id if necessary
+          name: team.teamname,
+          owner: team.owner,
+          memberCount,
+          color: 'bg-blue-700', // Default color, adjust as needed
+        };
+      });
+  
+      setTeams(transformedTeams);
+      console.log(transformedTeams);
+    } catch (err) {
+      setError('Failed to fetch teams.');
+    }
   }
   
 
-  
   const handleCreateTeam = () => {
     if (newTeamName.trim()) {
       const newTeam: Team = {
@@ -49,8 +62,9 @@ export default function TeamManagement() {
         name: newTeamName,
         memberCount: 0,
         color: 'bg-blue-700',
+        owner: '', // Assuming owner will be set later
       };
-      
+
       setTeams([...teams, newTeam]);
       setNewTeamName('');
       setShowCreateModal(false);
@@ -72,6 +86,13 @@ export default function TeamManagement() {
           </button>
         </div>
       </header>
+
+      {/* Error Message */}
+      {error && (
+        <div className="max-w-7xl mx-auto p-6 text-red-500 bg-red-100 rounded-md">
+          <p>{error}</p>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-6">
