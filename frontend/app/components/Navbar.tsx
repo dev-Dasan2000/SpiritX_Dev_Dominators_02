@@ -39,6 +39,7 @@ const Navbar = () => {
             className="fixed top-16 inset-x-0 bottom-0 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setIsOpen(false)}
           />
+      
 
           {/* Mobile Menu */}
           <div className="fixed top-16 right-0 w-64 h-[calc(100vh-4rem)] bg-white text-[#2D5D85] z-50 md:hidden transform transition-transform duration-300 ease-in-out">
@@ -71,7 +72,7 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
     { href: '/user/ViewTeam', icon: <Layers size={18} />, label: 'Team' },
     { href: '/user/budgetTracker', icon: <DollarSign size={18} />, label: 'Budget' },
     { href: '/user/LeaderBoard', icon: <BarChart size={18} />, label: 'Leaderboard' },
-    { href: '/user/login', icon: <LogOut size={18} className='hidden sm:inline-block' />, label: 'Logout' }
+    
   ];
 
   return (
@@ -87,8 +88,20 @@ const NavLinks = ({ setIsOpen }: { setIsOpen: React.Dispatch<React.SetStateActio
         >
           {icon} {label}
         </Link>
-      ))}
+        
+      )
+      
+      )}
+       <button
+  id="Logout1"
+  className="hidden md:flex items-center gap-2 bg-[#2D5D85] text-white px-4 py-2 rounded-lg hover:bg-[#4A90E2] transition-colors mt-auto"
+  onClick={() => setIsOpen(false)}
+>
+  <LogOut size={18} /> Logout
+</button>
+
     </>
+    
   );
 };
 
