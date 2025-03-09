@@ -1,6 +1,5 @@
 import express from 'express';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import pg from 'pg';
 import dotenv from 'dotenv';
 import pool from '../db.js';
 
@@ -16,18 +15,31 @@ router.post('/', async (req, res) => {
     const { userQuery } = req.body;
 
     // Fetch relevant data from PostgreSQL
-    const dbQuery = "SELECT * FROM (SELECT * FROM players p INNER JOIN matches m ON m.playerid = p.playerid) AS temp_tableWHERE temp_table.column ILIKE $1 LIMIT 5;";
+    const dbQuery = `
+      SELECT * FROM 
+      (SELECT * FROM players p INNER JOIN matches m ON m.playerid = p.playerid) AS temp_table 
+      WHERE temp_table.playername ILIKE $1 
+      LIMIT 5;
+    `;
+
     const dbResult = await pool.query(dbQuery, [`%${userQuery}%`]);
 
     // Prepare database context for AI
     const context = JSON.stringify(dbResult.rows);
 
     // Generate AI response using Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const response = await model.generateContent(`Database context: ${context}. User question: ${userQuery}`);
-    const botReply = response.candidates[0].content.parts[0].text;
+
+    // ✅ Handle undefined response safely
+    let botReply = "I'm not sure how to respond to that.";
+    
+    if (response?.candidates?.length > 0 && response.candidates[0]?.content?.parts?.length > 0) {
+      botReply = response.candidates[0].content.parts[0].text;
+    }
 
     res.json({ reply: botReply });
+
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Something went wrong" });
@@ -35,5 +47,6 @@ router.post('/', async (req, res) => {
 });
 
 export default router;
+
 
 
