@@ -21,13 +21,13 @@ export default function RootLayout({
           {/* Navbar as Header */}
           <SidebarProvider>
             <AdminSidebar/>
-          </SidebarProvider>
+          
           
           {/* Main Content */}
           <div className="flex-grow" >
             {children}
           </div>
-          
+          </SidebarProvider>
         
           
         </div>
