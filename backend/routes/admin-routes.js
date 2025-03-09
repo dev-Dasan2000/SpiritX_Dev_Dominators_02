@@ -8,7 +8,7 @@ const router = express.Router();
 // Get all admins
 router.get('/', authenticateToken, async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM admins');
+        const result = await pool.query('SELECT * FROM admin');
         return res.json(result.rows);
     } catch (err) {
         return res.status(500).json({ error: err.message });
@@ -19,7 +19,7 @@ router.get('/', authenticateToken, async (req, res) => {
 router.get('/:username', authenticateToken, async (req, res) => {
     try {
         const { username } = req.params;
-        const result = await pool.query('SELECT username FROM admins WHERE username = $1', [username]);
+        const result = await pool.query('SELECT username FROM admin WHERE username = $1', [username]);
         if (result.rows.length === 0) return res.status(404).json({ error: 'admin not found' });
         return res.json(result.rows[0]);
     } catch (err) {
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         await pool.query(
-            'INSERT INTO admins (username, password) VALUES ($1, $2)',
+            'INSERT INTO admin (username, password) VALUES ($1, $2)',
             [username, hashedPassword]
         );
         return res.status(201).json({ message: 'admin created successfully' });
@@ -48,7 +48,7 @@ router.put('/', authenticateToken, async (req, res) => {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         await pool.query(
-            'UPDATE admins SET password = $1 WHERE username = $2',
+            'UPDATE admin SET password = $1 WHERE username = $2',
             [hashedPassword, username]
         );
         res.json({ message: 'admin updated successfully' });
@@ -61,7 +61,7 @@ router.put('/', authenticateToken, async (req, res) => {
 router.delete('/:username', authenticateToken, async (req, res) => {
     try {
         const { username } = req.params;
-        await pool.query('DELETE FROM admins WHERE username = $1', [username]);
+        await pool.query('DELETE FROM admin WHERE username = $1', [username]);
         res.json({ message: 'admin deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });

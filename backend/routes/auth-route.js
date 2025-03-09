@@ -46,7 +46,7 @@ router.post('/loginAdmin', async (req, res) => {
     try {
         const { username, password, rememberMe } = req.body;
         console.log(rememberMe);
-        const user = await pool.query('SELECT * FROM admins WHERE username = $1', [username]);
+        const user = await pool.query('SELECT * FROM admin WHERE username = $1', [username]);
 
         if (user.rows.length === 0) {
             return res.json({ successful: false });
