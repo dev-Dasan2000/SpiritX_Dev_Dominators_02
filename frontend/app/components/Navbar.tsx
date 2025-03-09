@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Users, Layers, DollarSign, BarChart, MessageSquare, LogOut, Menu, X } from 'lucide-react';
 import AuthMethods from '../api/auth-methods';
 import Loader2 from '@/components/Loader';
+import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +24,10 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2 md:gap-3">
-          <div className="bg-white text-[#2D5D85] font-bold px-3 py-2 rounded-lg">FC</div>
-          <span className="text-lg font-semibold">Fantasy Cricket</span>
+          <div className="">
+            <Image src="/main-icon.png" alt="Main Icon" width={40} height={40}/>
+          </div>
+          <span className="text-lg font-semibold">Spirit11</span>
         </div>
 
         {/* Hamburger Icon */}
@@ -46,7 +49,7 @@ const Navbar = () => {
         <>
           {/* Blurred Backdrop (starts below the navbar) */}
           <div
-            className="fixed top-16 inset-x-0 bottom-0 backdrop-blur-sm z-40 md:hidden"
+            className="fixed top-20 inset-x-0 bottom-0 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setIsOpen(false)}
           />
 

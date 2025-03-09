@@ -50,10 +50,10 @@ const FloatingChatButton = () => {
           <div className="bg-purple-600 text-white p-4 flex justify-between items-center">
             <h3 className="font-medium">AI Assistant</h3>
             <button
-            disabled={isLoading}
+              disabled={isLoading}
               title={isOpen ? "Close chat" : "Open chat"}
               onClick={toggleChat}
-              className="text-white hover:text-gray-200 transition-colors"
+              className="text-white hover:text-gray-200 transition-colors cursor-pointer"
             >
               <X size={20} />
             </button>
@@ -78,7 +78,7 @@ const FloatingChatButton = () => {
 
           {/* Input Form */}
           <form onSubmit={handleSubmit} className="p-3 border-t border-gray-200">
-            <div className="flex items-center">
+            <div className="flex">
               <input
                 type="text"
                 value={inputValue}
@@ -88,9 +88,9 @@ const FloatingChatButton = () => {
               />
               <button
                 type="submit"
-                className="bg-purple-600 text-white p-2 rounded-r-lg hover:bg-purple-700 transition-colors"
+                className="bg-purple-600 cursor-pointer text-white p-2 rounded-r-lg hover:bg-purple-700 transition-colors"
               >
-                {isLoading?<Loader2/>:"Send"}
+                {isLoading ? <Loader2 /> : "Send"}
               </button>
             </div>
           </form>
@@ -102,7 +102,7 @@ const FloatingChatButton = () => {
         onClick={toggleChat}
         title={isOpen ? "Close chat" : "Open chat"}
         className={`${isOpen ? 'bg-gray-600' : 'bg-purple-600'
-          } text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center`}
+          } text-white cursor-pointer p-4 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center`}
       >
         <MessageSquare size={24} />
       </button>

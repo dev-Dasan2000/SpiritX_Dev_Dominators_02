@@ -88,7 +88,7 @@ export default function ViewTeam() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto py-4 px-0">
         <h1 className="text-4xl font-bold text-blue-700 text-center mb-2">{teamName}</h1>
         <div className="text-lg text-center text-gray-700 mb-6">Team Status: {players.length}/11 players selected</div>
 
